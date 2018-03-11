@@ -1,0 +1,41 @@
+body 
+{
+     background-color: #DDDDDD;
+     background-position: center center;
+     background-repeat:  no-repeat;
+     background-attachment: fixed;
+     background-size:  cover;
+     background-color: #999;
+}
+
+.container 
+{
+   margin-top:120px;
+   opacity: 0.9;
+}
+
+.panel-heading {
+    padding: 5px 15px;
+}
+
+.panel-footer {
+	padding: 1px 15px;
+	color: #A0A0A0;
+}
+
+.profile-img {
+	width: 100px;
+	height: 100px;
+	margin: 0 auto 10px;
+	display: block;
+	-moz-border-radius: 50%;
+	-webkit-border-radius: 50%;
+	border-radius: 50%;
+}
+
+.centrar 
+{
+    text-align: center;
+}
+
+

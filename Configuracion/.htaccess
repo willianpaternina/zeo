@@ -1,0 +1,5 @@
+AuthUserFile /xampp/htdocs/Zeo/Padlock/.htpasswd
+AuthName Development
+AuthType Basic
+
+require user wpaternina

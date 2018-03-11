@@ -1,0 +1,18 @@
+html {
+    background:	#DDDDDD;
+    padding:	0px; 
+    display:	block !important;
+}
+
+body {
+    background:	#DDDDDD;
+    padding:	30px; 
+    min-height:	300px;
+    min-width:	600px;
+
+}
+
+body > .ui-layout-center {
+    background:	#9B9;
+    padding:	0; 
+}
