@@ -8,7 +8,7 @@
  * @version    1.0
  */
     define("SERVER", "mysql:dbname=zeo;host=localhost");
-    define("USERNAME", "wapr");
-    define("PASSWORD", "Unisinu2018");
+    define("USERNAME", "root");
+    define("PASSWORD", "");
 ?>
 

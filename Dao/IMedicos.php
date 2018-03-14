@@ -13,7 +13,7 @@ interface IMedicos {
      public function ActualizarInformacion(Medicos $medicos);
      public function ListaPaciente();
      public function RegistrarPaciente(Pacientes $pacientes);
-     
+     public function listarMedicos($estado = 1);
 }
 
 ?>

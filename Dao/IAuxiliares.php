@@ -11,6 +11,7 @@ interface IAuxiliares {
     
      public function IniciarSesionAuxiliar();
      public function ActualizarInformacion(Auxiliares $auxiliares);
+     public function RegistrarAuxiliar(Auxiliares $auxiliares);
 }
 
 ?>

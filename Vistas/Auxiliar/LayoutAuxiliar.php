@@ -1,5 +1,5 @@
 <?php 
-     include_once '../../Configuracion/RouterPaciente.php';
+     include_once '../../Configuracion/RouterAuxiliar.php';
      include_once '../../Modelo/Sesion.php';
      $objses = new Sesion();
      $objses->init();

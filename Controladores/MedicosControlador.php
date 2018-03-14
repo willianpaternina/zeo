@@ -1,4 +1,6 @@
 <?php
+require_once $_SERVER['DOCUMENT_ROOT']."/Zeo/Configuracion/Conexion.php";
+require_once $_SERVER['DOCUMENT_ROOT']."/Zeo/Dao/IMedicos.php";
 /**
  * Description of MedicosControlador
  *
@@ -12,6 +14,7 @@ class MedicosControlador extends Conexion implements IMedicos {
     public function __construct() {
         parent::ConexionMySQLServer();
         $this->objSe = new Sesion();
+        $this->result = array();
     }
     
     public function ActualizarInformacion(Medicos $medicos) {
@@ -118,6 +121,19 @@ class MedicosControlador extends Conexion implements IMedicos {
         } catch (PDOException $e) {
             die($e->getMessage());
         }
+    }
+
+    public function listarMedicos($estado = 1) {
+        $sql = "CALL sp_listarMedicos (?);";
+        $stmt = $this->cnn->prepare($sql);
+        $stmt->bindParam(1, $estado);
+        $stmt->execute();
+        
+        if($row = $stmt->fetch()){
+            $this->result[] = $row;
+        }
+        return $this->result;
+        
     }
 
 }

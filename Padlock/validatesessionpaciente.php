@@ -13,6 +13,8 @@
    
      include_once '../Dao/IAuxiliares.php';
      require '../Controladores/AuxiliarControlador.php';
+     require_once $_SERVER['DOCUMENT_ROOT']."/Zeo/Modelo/Auxiliares.php";
+     
      
      $rol = $_POST['rol'];
      switch ($rol) {

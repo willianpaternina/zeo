@@ -173,6 +173,7 @@ CREATE  TABLE IF NOT EXISTS Cita
 (
 	idCita INT (11) NOT NULL AUTO_INCREMENT,
 	Medico INT (11) NOT NULL,
+	Fecha DATE NOT NULL,
 	Paciente INT (11) NOT NULL,
 	Horario INT (11) NOT NULL,
 	concepto VARCHAR (255) NOT NULL,
@@ -312,7 +313,9 @@ CREATE  TABLE IF NOT EXISTS Auxiliares
    END $$
  DELIMITER ;
 
-
+/*
+ * ¡Rafa!
+ */
  DELIMITER $$
  CREATE PROCEDURE sp_RegisterEspecialidad
  (
@@ -326,5 +329,51 @@ CREATE  TABLE IF NOT EXISTS Auxiliares
  END $$
  DELIMITER ;
 
+ DELIMITER $$
+ CREATE PROCEDURE sp_RegistrarAuxiliar
+ (
+	IN sp_codigo VARCHAR (60),
+	IN sp_Rol VARCHAR (60),
+	IN sp_tipoidentificacion CHAR (2),
+    IN sp_identificacion BIGINT(20),
+    IN sp_nombre VARCHAR (25),
+    IN sp_apellido VARCHAR (35),
+    IN sp_apellidocasada VARCHAR (35),
+    IN sp_genero CHAR (1),
+    IN sp_fechanacimiento DATE,
+    IN sp_tiposangre CHAR (4),
+    IN sp_telefono BIGINT(7),
+    IN sp_celular BIGINT (10),
+    IN sp_estadocivil VARCHAR (35),
+    IN sp_ocupacion VARCHAR (80),
+    IN sp_religion VARCHAR (50),
+    IN sp_pais VARCHAR (35),
+    IN sp_departamento VARCHAR (35),
+    IN sp_municipio VARCHAR (50),
+    IN sp_domicilio VARCHAR (120),
+    IN sp_email VARCHAR (200),
+    IN sp_clave VARCHAR (60),
+    IN sp_fecharegistro DATE,
+    IN sp_estado INT
+ )
+ IF NOT EXISTS (SELECT tipoidentificacion, identificacion FROM auxiliares WHERE tipoidentificacion = sp_tipoidentificacion AND identificacion = sp_identificacion )THEN
+	 BEGIN
+		INSERT INTO auxiliares (codigo, Rol, tipoidentificacion, identificacion, nombre, apellido, apellidocasada, genero, fechanacimiento, tiposangre, telefono, celular, estadocivil, ocupacion, religion, pais, departamento, municipio, domicilio, email, clave, fecharegistro, estado) 
+		VALUES (sp_codigo, sp_Rol, sp_tipoidentificacion, sp_identificacion, sp_nombre, sp_apellido, sp_apellidocasada, sp_genero, sp_fechanacimiento, sp_tiposangre, sp_telefono, sp_celular, sp_estadocivil, sp_ocupacion, sp_religion, sp_pais, sp_departamento, sp_municipio, sp_domicilio, sp_email, sp_clave, sp_fecharegistro, sp_estado); 
+	 END;
+ ELSE
+	 BEGIN
+		 select 'El objeto existe';
+	 END;
+ END IF$$
+ DELIMITER ;
 
 
+
+ call sp_RegistrarAuxiliar("AU123456", "4", "CC", 73097541, "Arnaldo", "Castilla", "", "M", "1991-01-09", "A", 6765877, 3172755590, "SOLTERO", "DESARROLLADOR", "CRISTIANO", "COLOMBIA", "BOLIVAR", "CARTAGENA", "CRA 58A # 6 - 88", "arnaldo.castilla@hotmail.com", "123456789", "2018-03-12", 1);
+  DELIMITER $$
+ CREATE PROCEDURE sp_listarMedicos(IN sp_estado INT(1))
+   BEGIN
+   SELECT * FROM Medicos Where estado = sp_estado;
+   END $$
+ DELIMITER ;
