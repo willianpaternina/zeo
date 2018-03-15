@@ -14,6 +14,7 @@ interface IMedicos {
      public function ListaPaciente();
      public function RegistrarPaciente(Pacientes $pacientes);
      public function listarMedicos($estado = 1);
+     public function horarioMedico($Medico);
 }
 
 ?>

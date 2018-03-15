@@ -23,7 +23,7 @@
                                  <th><?php echo $listaMedicos[$i]["codigo"] ?></th>
                                 <th><?php echo $listaMedicos[$i]["nombre"]." ".$listaMedicos[$i]["apellido"] ?></th>
                                 <th><?php echo $listaMedicos[$i]["email"] ?></th>
-                                <th><button class="btn btn-info" onclick="horario(<?php echo $listaMedicos[$i]["idMedico"] ?>)">Horario</button></th>
+                                <th><button class="btn btn-info" id="btnhorario" onClick="horario(<?php echo $listaMedicos[$i]["idMedico"] ?>)">Horario</button></th>
                             </tr>
                         </thead>
                     </table>
@@ -31,7 +31,8 @@
                 </div>
                 <?php endfor ?>
                 <div class="ui raised segment botoneraexcelpdfpaciente horario" style="display: none">
-                    <p><a href="javascript:void(0)" id="back">Regresar</a></p>
+                    
+                    <button class="ui blue button" id="back"><i class="fa fa-arrow-left"></i> Regresar</button>
                     <h1>Horario del medico: </h1>
                     <div id='calendar'></div>
                 </div>

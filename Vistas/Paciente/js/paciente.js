@@ -4,13 +4,18 @@
  * and open the template in the editor.
  */
 $(function(){   
+    
     $("#back").on("click", function(){
         $(".medicos").show();
         $(".horario").hide();
+        $('#calendar').fullCalendar('destroy');
+        $('#calendar').fullCalendar('destroy');
     })
+    
 })
 
 var horario = function(id_medico){
+     
     $(".medicos").hide();
     $(".horario").show();
     $('#calendar').fullCalendar({
@@ -19,67 +24,23 @@ var horario = function(id_medico){
         center: 'title',
         right: 'month,basicWeek'
       },
-        locale: 'es',
         defaultDate: horaActual(),
-        defaultView: 'basicWeek',
-        events: [
-        {
-          title: 'All Day Event',
-          start: '2018-03-01'
-        },
-        {
-          title: 'Long Event',
-          start: '2018-03-07',
-          end: '2018-03-10'
-        },
-        {
-          id: 999,
-          title: 'Repeating Event',
-          start: '2018-03-09T16:00:00'
-        },
-        {
-          id: 999,
-          title: 'Repeating Event',
-          start: '2018-03-16T16:00:00'
-        },
-        {
-          title: 'Conference',
-          start: '2018-03-11',
-          end: '2018-03-13'
-        },
-        {
-          title: 'Meeting',
-          start: '2018-03-12T10:30:00',
-          end: '2018-03-12T12:30:00'
-        },
-        {
-          title: 'Lunch',
-          start: '2018-03-12T12:00:00'
-        },
-        {
-          title: 'Meeting',
-          start: '2018-03-12T14:30:00'
-        },
-        {
-          title: 'Happy Hour',
-          start: '2018-03-12T17:30:00'
-        },
-        {
-          title: 'Dinner',
-          start: '2018-03-12T20:00:00'
-        },
-        {
-          title: 'Birthday Party',
-          start: '2018-03-13T07:00:00'
-        },
-        {
-          title: 'Click for Google',
-          url: 'http://google.com/',
-          start: '2018-03-28'
-        }
-      ]
-
+        defaultView: 'month',
+        events: {
+             type: 'POST',
+             cache: false,
+             data: {
+               idMedico: id_medico  
+             },
+             url: 'http://localhost/zeo/Controladores/MedicosControlador.php',
+             error: function(response) {
+                console.log(response)
+                 //alert('there was an error while fetching events!');
+              },
+             
+          },         
     });
+    
 }
 var horaActual = function(){
     var hoy = new Date();
