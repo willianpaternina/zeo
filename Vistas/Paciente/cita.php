@@ -20,15 +20,24 @@
                     <table class="ui celled table" cellspacing="0" width="100%">
                         <thead>
                             <tr>
-                                 <th><?php echo $listaMedicos[$i]["codigo"] ?></th>
-                                <th><?php echo $listaMedicos[$i]["nombre"]." ".$listaMedicos[$i]["apellido"] ?></th>
-                                <th><?php echo $listaMedicos[$i]["email"] ?></th>
-                                <th>Especialidad: <?php echo $listaMedicos[$i]["especialidad"] ?></th>
-                                <th>
-                                    <button class="ui blue button" id="btnhorario" value="<?php echo $_SESSION["idPaciente"] ?>" onClick="horario(<?php echo $listaMedicos[$i]["idMedico"] ?>, <?php echo $listaMedicos[$i]["idEspecialidades"] ?>)"><i class="fa fa-calendar"></i> Horario</button>
-                                </th>
+                                <th>CODIGO</th>
+                                <th>PACIENTE</th>
+                                <th>EMAIL</th>
+                                <th>ESPECIALIDAD</th>
+                                <th>CITAS</th>
                             </tr>
                         </thead>
+                        <tbody>
+                            <tr>
+                                <td><?php echo $listaMedicos[$i]["codigo"] ?></td>
+                                <td><?php echo $listaMedicos[$i]["nombre"]." ".$listaMedicos[$i]["apellido"] ?></td>
+                                <td><?php echo $listaMedicos[$i]["email"] ?></td>
+                                <td><?php echo $listaMedicos[$i]["especialidad"] ?></td>
+                                <td>
+                                    <button class="ui blue button" id="btnhorario" value="<?php echo $_SESSION["idPaciente"] ?>" onClick="horario(<?php echo $listaMedicos[$i]["idMedico"] ?>, <?php echo $listaMedicos[$i]["idEspecialidades"] ?>)"><i class="fa fa-calendar"></i> Horario</button>
+                                </td>
+                            <tr>
+                        </tbody>
                     </table>
                             
                 </div>
