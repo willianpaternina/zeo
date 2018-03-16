@@ -66,6 +66,12 @@
             <thead>
                 <tr>
                     <th>
+                        <div class="ui tertiary inverted red segment" style="display: none" id="mensaje_error">
+                            <p>ya has tomado una cita medica, por favor intenta otra fecha u otro medico</p>
+                        </div>
+                        <div class="ui tertiary inverted green segment" style="display: none" id="mensajedeexito">
+                            <p>Ha tomado su cita con exito!</p>
+                        </div>
                         <div class="ui fluid input focus">
                             <input type="text" placeholder="Ingresar motivo de la cita medica" id="_motivoCitaMedica">
                         </div>

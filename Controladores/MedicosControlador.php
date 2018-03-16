@@ -153,25 +153,26 @@ class MedicosControlador extends Conexion implements IMedicos {
         return  $this->result;
     }
 
-    public function registrarCita($id_paciente, $id_horario, $concepto, $estado, $mesage = "@sp_Message") {
+    public function registrarCita($id_paciente, $id_horario, $concepto, $estado) {
+        /*
+         * Capturar mensaje de procedimiento almacenado
+         */
         try {
-            $sql = "CALL sp_RegistrarCita (?, ?, ?, ?, @sp_Message);";
+            $sql = "CALL sp_RegistrarCita (?, ?, ?, ?);   ";
             $stmt = $this->cnn->prepare($sql);
             $stmt->bindParam(1, $id_paciente);
             $stmt->bindParam(2, $id_horario);
             $stmt->bindParam(3, $concepto);
             $stmt->bindParam(4, $estado);
             
-            $rpta = $stmt->execute();
-            /*if($stmt->execute())
-            {
-                return true;
-            }else{
-                return false;
-            }*/
+            $stmt->execute();
+            if($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+                $this->result[] = $row;
+            }
+             return $this->result;return;
             
         } catch (Exception $exc) {
-            echo $stmt->errno();
+            echo $exc->getMessage();
         }
             
     }

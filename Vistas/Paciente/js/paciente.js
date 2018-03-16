@@ -53,7 +53,7 @@ var horario = function(id_medico, id_especialidad){
             //console.log('Event: ' + calEvent.id + 'Id_paciente: ' + $("#btnhorario").val() );
             //return;
                 $("#_btnGuardarCita").on("click", function(){
-                    if($("#_motivoCitaMedica").val() === ""){
+                    if($("#_motivoCitaMedica").val() == ""){
                         $("#_motivoCitaMedica").focus();
                         alert("Debes ingresar un motivo de consulta \n  Es super importante para tu medico!!!");
                         return;
@@ -73,8 +73,23 @@ var horario = function(id_medico, id_especialidad){
                         cache: false,
                         processData: false,
                         contentType: false,
-                        success: function(response){
-                            console.log(response)
+                        success: function(respuesta){
+                            rept = eval(respuesta)
+                            if(rept[0]["exito"]=='ok'){
+                                $("#mensajedeexito").show(1500);
+                                setTimeout(function(){
+                                    $("#_motivoCitaMedica").val("");
+                                    $("#mensajedeexito").hide();  
+                                    $(".confirmar_cita").modal('hide');}, 3500);
+                                $("#mensaje_exito").hide();
+                            }else if(rept[0]["response"]=='no_ok'){
+                                $("#mensaje_error").show(1500);
+                                setTimeout(function(){ 
+                                    $("#_motivoCitaMedica").val("");
+                                    $("#mensaje_error").hide(); 
+                                    $(".confirmar_cita").modal('hide');}, 3500);
+                                
+                            }
                         }
                     });
                 })
