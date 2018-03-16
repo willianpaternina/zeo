@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 16-03-2018 a las 04:25:39
+-- Tiempo de generación: 16-03-2018 a las 22:37:25
 -- Versión del servidor: 10.1.30-MariaDB
 -- Versión de PHP: 7.2.2
 
@@ -26,8 +26,16 @@ DELIMITER $$
 --
 -- Procedimientos
 --
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_GetPacientes` ()  BEGIN 
+	select * from cita as C INNER JOIN pacientes as P ON C.Paciente = P.idPaciente;
+ END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_horarioMedico` (IN `sp_Medico` INT(3), IN `sp_Especialidad` INT(3))  BEGIN
 	SELECT idHorario as id, fecha as start, CONCAT(horainicio," - " , horafinal) as title FROM horario WHERE Medico = sp_Medico AND Especialidad = sp_Especialidad;
+   END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_HorarioPaciente` (IN `sp_Medico` INT)  BEGIN
+	SELECT P.idPaciente as id,  H.fecha AS start, CONCAT(P.nombre," - " , P.apellido , " - " , C.concepto , " - ", C.estado, " - ") as title  from cita as C INNER JOIN pacientes as P ON C.Paciente = P.idPaciente INNER JOIN horario as H ON H.idHorario = C.horario INNER JOIN medicos AS M ON M.idMedico = H.Medico WHERE M.idMedico = sp_Medico;
    END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_ListarAuxiliares` ()  BEGIN
@@ -59,6 +67,22 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_RegistrarAuxiliar` (IN `sp_codig
 		 select 'Identificacion se encuentra registrada' as response;
 	 END;
  END IF$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_RegistrarCita` (IN `sp_Paciente` INT, IN `sp_Horario` INT, IN `sp_Concepto` VARCHAR(100), IN `sp_Estado` VARCHAR(35), INOUT `sp_Message` VARCHAR(100))  BEGIN
+	IF NOT EXISTS (SELECT Paciente, Horario, estado FROM cita WHERE Paciente = sp_Paciente AND  Horario = sp_Horario AND estado = sp_Estado )THEN
+		 BEGIN
+			INSERT INTO cita (idCIta, Paciente, Horario, concepto, estado, fecha_registro)
+			values( null, sp_paciente, sp_Horario, sp_concepto, sp_Estado, now()  );
+			select sp_Message = 'registro ingresado con exito' ;
+          
+		 END;
+	 ELSE
+		 BEGIN
+			 select sp_Message = 'Ya ha tomado una cita con el medico, especialidad y fecha, por favor cambie alguno de estos items.' ;
+		 END;
+	 END IF;
+     
+ END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_rol` ()  BEGIN
 select * from roles;
@@ -157,8 +181,17 @@ CREATE TABLE `cita` (
   `Paciente` int(11) NOT NULL,
   `Horario` int(11) NOT NULL,
   `concepto` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
-  `estado` varchar(35) COLLATE utf8_spanish_ci NOT NULL
+  `estado` varchar(35) COLLATE utf8_spanish_ci NOT NULL,
+  `fecha_registro` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `cita`
+--
+
+INSERT INTO `cita` (`idCita`, `Paciente`, `Horario`, `concepto`, `estado`, `fecha_registro`) VALUES
+(10, 1, 1, 'CHQUEO RUTINARIO', 'ESPERA_ATENCION', '2018-03-16'),
+(11, 2, 1, 'DOLOR DE MUSCULOS', 'ESPERA_ATENCION', '2018-03-16');
 
 -- --------------------------------------------------------
 
@@ -306,7 +339,8 @@ CREATE TABLE `pacientes` (
 --
 
 INSERT INTO `pacientes` (`idPaciente`, `codigo`, `Rol`, `tipoidentificacion`, `identificacion`, `nombre`, `apellido`, `apellidocasada`, `genero`, `fechanacimiento`, `tiposangre`, `telefono`, `celular`, `estadocivil`, `ocupacion`, `religion`, `pais`, `departamento`, `municipio`, `domicilio`, `email`, `clave`, `fecharegistro`, `estado`) VALUES
-(1, 'ABCDE', 2, 'CC', 123, 'ARNALDO', 'RAFAEL', NULL, 'M', '2018-03-06', 'A+', 67658777, 3172755590, 'SOLTERO', 'DESARROLLADOR', 'CRISTIANO', 'COLOMBIA', 'BOLIVAR', 'CARTAGENA', 'CRA 58A #6 - 88', 'ARNALDO.CASTILLA@HOTMAIL.COM', '123', '2018-03-14 04:30:47', 1);
+(1, 'ABCDE', 2, 'CC', 123, 'ARNALDO', 'RAFAEL', NULL, 'M', '2018-03-06', 'A+', 67658777, 3172755590, 'SOLTERO', 'DESARROLLADOR', 'CRISTIANO', 'COLOMBIA', 'BOLIVAR', 'CARTAGENA', 'CRA 58A #6 - 88', 'ARNALDO.CASTILLA@HOTMAIL.COM', '123', '2018-03-14 04:30:47', 1),
+(2, 'QAZ123', 2, 'CC', 741852, 'ROBERTO', 'MOREALES', NULL, 'M', '2017-12-19', 'A+', 6662651, 3014521456, 'CASADO', 'INGENIERO MECANICO', 'MUSULMAN', 'COLOMBIA', 'ATLANTICO', 'BARRANQUILLA', 'NO TENGO', 'ROBERTO.MORALES@YAHOO.ES', '741852', '2018-03-16 21:25:12', 1);
 
 -- --------------------------------------------------------
 
@@ -422,7 +456,7 @@ ALTER TABLE `auxiliares`
 -- AUTO_INCREMENT de la tabla `cita`
 --
 ALTER TABLE `cita`
-  MODIFY `idCita` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idCita` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `consultorio`
@@ -452,7 +486,7 @@ ALTER TABLE `medicos`
 -- AUTO_INCREMENT de la tabla `pacientes`
 --
 ALTER TABLE `pacientes`
-  MODIFY `idPaciente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idPaciente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `roles`
