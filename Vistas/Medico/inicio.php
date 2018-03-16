@@ -1,4 +1,3 @@
-
 <div class="ui segments">
     <div class="ui blue inverted segment">
         <h4>MÓDULO DE CITAS MEDICAS</h4>

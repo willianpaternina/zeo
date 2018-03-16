@@ -176,18 +176,38 @@ class MedicosControlador extends Conexion implements IMedicos {
             
     }
 
+    public function horarioCitaPaciente($id_medico) {
+        try{
+        $sql = "CALL sp_HorarioPaciente (?);";
+            $stmt = $this->cnn->prepare($sql);
+            $stmt->bindParam(1, $id_medico);
+            
+            $rpta = $stmt->execute();
+            while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+            $this->result[] = $row;
+        }
+
+        return  $this->result;
+        } catch (PDOException $e) {
+            die($e->getMessage());
+        }
+    }
+
 }
 if(isset($_POST["idMedico"]) and isset($_POST["idEspecialidad"]) ){
     $controlador = new MedicosControlador();
     $r = $controlador->horarioMedico($_POST["idMedico"], $_POST["idEspecialidad"]);
-
-    echo json_encode($r);
+    echo json_encode($r);return;
 }
 if(isset($_POST["registrarCita"]) and $_POST["registrarCita"]=="si"){
    $controlador = new MedicosControlador();
    $r = $controlador->registrarCita($_POST["id_paciente"], $_POST["id_horario"], $_POST["concepto"], $_POST["estado"]);
-   var_dump($r);return;
-   
-    echo json_encode($r);
+   echo json_encode($r);return;
+}
+if(isset($_POST["citaMedica"])){
+    session_start();
+    $controlador = new MedicosControlador();
+    $r = $controlador->horarioCitaPaciente($_SESSION["idMedico"]);
+    echo json_encode($r);return;
 }
 ?>

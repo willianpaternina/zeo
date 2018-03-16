@@ -9,6 +9,18 @@ $(function(){
         defaultView: 'month',  
         navLinks: true, // can click day/week names to navigate views
         editable: true,
+        events: {
+             type: 'POST',
+             cache: false,
+             data: {
+               citaMedica: ""
+             },
+             url: 'http://localhost/zeo/Controladores/MedicosControlador.php',
+             error: function(response) {
+                console.log(response)
+              },
+             
+          },
   })
 })
 var horaActual = function(){
