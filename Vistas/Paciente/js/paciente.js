@@ -47,13 +47,43 @@ var horario = function(id_medico, id_especialidad){
                 $(".confirmar_cita").modal({
                     closable: true
                 });
-            console.log('Event: ' + calEvent.id + 'Id_paciente: ' + $("#btnhorario").val() );
-            return;
+                var id_horario = calEvent.id;
+                var id_paciente = $("#btnhorario").val();
+                var estado = "ESPERA_ATENCION";
+            //console.log('Event: ' + calEvent.id + 'Id_paciente: ' + $("#btnhorario").val() );
+            //return;
+                $("#_btnGuardarCita").on("click", function(){
+                    if($("#_motivoCitaMedica").val() === ""){
+                        $("#_motivoCitaMedica").focus();
+                        alert("Debes ingresar un motivo de consulta \n  Es super importante para tu medico!!!");
+                        return;
+                    }
+                    var datos = new FormData();
+                        datos.append("id_horario", id_horario);
+                        datos.append("id_paciente", id_paciente);
+                        datos.append("concepto", $("#_motivoCitaMedica").val());
+                        datos.append("estado", estado);
+                        datos.append("registrarCita", "si");
+                    
+
+                    $.ajax({
+                        url: 'http://localhost/zeo/Controladores/MedicosControlador.php',
+                        type: 'POST',
+                        data: datos,
+                        cache: false,
+                        processData: false,
+                        contentType: false,
+                        success: function(response){
+                            console.log(response)
+                        }
+                    });
+                })
 
           }
     });
     
 }
+
 var horaActual = function(){
     var hoy = new Date();
     var dd = hoy.getDate();
@@ -83,6 +113,4 @@ var horaActual = function(){
     });
 });
 
-$("#_btnGuardarCita").on("click", function(){
-    alert("guardar cita XD")
-})
+

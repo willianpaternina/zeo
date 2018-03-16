@@ -146,21 +146,48 @@ class MedicosControlador extends Conexion implements IMedicos {
         $stmt->bindParam(2, $Especialidad);
         $stmt->execute();
         
-        $data = array();
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
             $this->result[] = $row;
         }
-        $data['event'] = $this->result;
+
         return  $this->result;
+    }
+
+    public function registrarCita($id_paciente, $id_horario, $concepto, $estado, $mesage = "@sp_Message") {
+        try {
+            $sql = "CALL sp_RegistrarCita (?, ?, ?, ?, @sp_Message);";
+            $stmt = $this->cnn->prepare($sql);
+            $stmt->bindParam(1, $id_paciente);
+            $stmt->bindParam(2, $id_horario);
+            $stmt->bindParam(3, $concepto);
+            $stmt->bindParam(4, $estado);
+            
+            $rpta = $stmt->execute();
+            /*if($stmt->execute())
+            {
+                return true;
+            }else{
+                return false;
+            }*/
+            
+        } catch (Exception $exc) {
+            echo $stmt->errno();
+        }
+            
     }
 
 }
 if(isset($_POST["idMedico"]) and isset($_POST["idEspecialidad"]) ){
-    //print_r($_POST);exit;
     $controlador = new MedicosControlador();
     $r = $controlador->horarioMedico($_POST["idMedico"], $_POST["idEspecialidad"]);
 
     echo json_encode($r);
 }
-
+if(isset($_POST["registrarCita"]) and $_POST["registrarCita"]=="si"){
+   $controlador = new MedicosControlador();
+   $r = $controlador->registrarCita($_POST["id_paciente"], $_POST["id_horario"], $_POST["concepto"], $_POST["estado"]);
+   var_dump($r);return;
+   
+    echo json_encode($r);
+}
 ?>
