@@ -1,4 +1,7 @@
 <?php
+require_once $_SERVER['DOCUMENT_ROOT']."/Zeo/Configuracion/Conexion.php";
+require_once $_SERVER['DOCUMENT_ROOT']."/Zeo/Dao/IMedicos.php";
+require_once $_SERVER['DOCUMENT_ROOT']."/Zeo/Modelo/Sesion.php";
 /**
  * Description of MedicosControlador
  *
@@ -8,10 +11,13 @@ class MedicosControlador extends Conexion implements IMedicos {
 
     public $objSe;
     public $result;
+   
     
     public function __construct() {
         parent::ConexionMySQLServer();
         $this->objSe = new Sesion();
+        $this->result = array();
+        
     }
     
     public function ActualizarInformacion(Medicos $medicos) {
@@ -120,6 +126,41 @@ class MedicosControlador extends Conexion implements IMedicos {
         }
     }
 
+    public function listarMedicos($estado = 1) {
+        $sql = "CALL sp_listarMedicos (?);";
+        $stmt = $this->cnn->prepare($sql);
+        $stmt->bindParam(1, $estado);
+        $stmt->execute();
+        
+        while($row = $stmt->fetch()){
+            $this->result[] = $row;
+        }
+        
+        return $this->result;
+        
+    }
+    public function horarioMedico($Medico, $Especialidad) {
+        $sql = "CALL sp_horarioMedico (?, ?);";
+        $stmt = $this->cnn->prepare($sql);
+        $stmt->bindParam(1, $Medico);
+        $stmt->bindParam(2, $Especialidad);
+        $stmt->execute();
+        
+        $data = array();
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+            $this->result[] = $row;
+        }
+        $data['event'] = $this->result;
+        return  $this->result;
+    }
+
+}
+if(isset($_POST["idMedico"]) and isset($_POST["idEspecialidad"]) ){
+    //print_r($_POST);exit;
+    $controlador = new MedicosControlador();
+    $r = $controlador->horarioMedico($_POST["idMedico"], $_POST["idEspecialidad"]);
+
+    echo json_encode($r);
 }
 
 ?>

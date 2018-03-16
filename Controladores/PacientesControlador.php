@@ -35,7 +35,7 @@ class PacientesControlador extends Conexion implements IPacientes {
                 switch ($rol) {
                      case 'PACIENTE' :
                          $this->objSe->init();
-                         $this->objSe->set('idPaciente', $result[0]['idUsuario']);
+                         $this->objSe->set('idPaciente', $result[0]['idPaciente']);
                          $this->objSe->set('codigo', $result[0]['codigo']);
                          $this->objSe->set('nombre', $result[0]['nombre']);
                          $this->objSe->set('apellido', $result[0]['apellido']);

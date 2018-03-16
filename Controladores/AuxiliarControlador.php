@@ -1,11 +1,17 @@
 <?php
-
+require_once $_SERVER['DOCUMENT_ROOT']."/Zeo/Dao/IAuxiliares.php";
+require_once $_SERVER['DOCUMENT_ROOT']."/Zeo/Configuracion/Conexion.php";
+require_once $_SERVER['DOCUMENT_ROOT']."/Zeo/Modelo/Sesion.php";
+require_once $_SERVER['DOCUMENT_ROOT']."/Zeo/Modelo/Auxiliares.php";
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 
+
+   
+            
 /**
  * Description of AuxiliarControlador
  *
@@ -24,7 +30,39 @@ class AuxiliarControlador extends Conexion implements IAuxiliares {
     public function ActualizarInformacion(Auxiliares $auxiliares) {
         
     }
-
+    public function RegistrarAuxiliar(Auxiliares $auxiliares){
+        try {
+            $sql = "CALL sp_RegistrarAuxiliar(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?); ";
+            $this->cnn->prepare($sql)->execute(array(
+                $auxiliares->getCodigo(),
+                $auxiliares->getRol(),
+                $auxiliares->getTipoidentificacion(),
+                $auxiliares->getIdentificacion(),
+                $auxiliares->getNombre(),
+                $auxiliares->getApellido(),
+                $auxiliares->getApellidocasada(),
+                $auxiliares->getGenero(),
+                $auxiliares->getFechanacimiento(),
+                $auxiliares->getTiposangre(),
+                $auxiliares->getTelefono(),
+                $auxiliares->getCelular(),
+                $auxiliares->getEstadocivil(),
+                $auxiliares->getOcupacion(),
+                $auxiliares->getReligion(),
+                $auxiliares->getPais(),
+                $auxiliares->getDepartamento(),
+                $auxiliares->getMunicipio(),
+                $auxiliares->getDomicilio(),
+                $auxiliares->getEmail(),
+                $auxiliares->getClave(),
+                $auxiliares->getFecharegistro(),
+                $auxiliares->getEstado()
+            ));
+            
+        } catch (Exception $exc) {
+            echo $exc->getMessage();
+        } 
+    }
     public function IniciarSesionAuxiliar() {
         try {
             $stm = $this->cnn->prepare("SELECT *

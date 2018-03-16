@@ -27,6 +27,7 @@
     <head>
         <meta charset="UTF-8">
         <title></title>
+       
         <link href="../Recursos/css/normalize.css" rel="stylesheet" type="text/css"/>
         <link href="../Recursos/lib/font-awesome-4.7.0/css/font-awesome.css" rel="stylesheet" type="text/css"/>
         <link href="../Recursos/lib/Semantic/semantic.css" rel="stylesheet" type="text/css"/>
@@ -34,6 +35,9 @@
         <link href="../Recursos/css/buttons.jqueryui.min.css" rel="stylesheet" type="text/css"/>
         <link href="../Recursos/css/session.css" rel="stylesheet" type="text/css"/>
         <link href="../Recursos/css/layout.css" rel="stylesheet" type="text/css"/>
+        <link href="../Recursos/css/fullcalendar.min.css" rel="stylesheet" type="text/css"/>
+        <link href="../Recursos/css/fullcalendar.print.min.css" rel='stylesheet' media='print' />
+               
     </head>
     <body>
         <div class="ui-layout-north">
@@ -69,5 +73,11 @@
         <script src="../Recursos/js/buttons.print.min.js" type="text/javascript"></script>
         <script src="../Recursos/js/jszip.min.js" type="text/javascript"></script>
         <script src="../Recursos/js/vfs_fonts.js" type="text/javascript"></script>
+        <script src="js/paciente.js" type="text/javascript"></script>
+        
+        <script src='../Recursos/js/moment.min.js'></script>
+        <script src='../Recursos/js/fullcalendar.min.js'></script>
+        
+        
     </body>   
 </html>

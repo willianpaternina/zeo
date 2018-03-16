@@ -1,5 +1,5 @@
 <?php
-
+require_once $_SERVER['DOCUMENT_ROOT']."/Zeo/Modelo/Roles.php";
 /**
  * Esta clase modela la tabla auxiliares de la base de datos
  *
@@ -33,8 +33,9 @@ class Auxiliares extends Roles {
      private $email;
      private $clave;
      private $fecharegistro;
+     private $estado;
      
-     public function __Auxiliares ($idRol, $rol, $detalle, $idAuxiliar, $codigo, $Rol, $tipoidentificacion, $identificacion, $nombre, $apellido, $apellidocasada, $genero, $fechanacimiento, $tiposangre, $telefono, $celular, $estadocivil, $ocupacion, $religion, $pais, $departamento, $municipio, $domicilio, $email, $clave, $fecharegistro) {
+     public function Auxiliares ($idRol, $rol, $detalle, $idAuxiliar, $codigo, $Rol, $tipoidentificacion, $identificacion, $nombre, $apellido, $apellidocasada, $genero, $fechanacimiento, $tiposangre, $telefono, $celular, $estadocivil, $ocupacion, $religion, $pais, $departamento, $municipio, $domicilio, $email, $clave, $fecharegistro, $estado) {
         parent::__Roles($idRol, $rol, $detalle);
         $this->idAuxiliar = $idAuxiliar;
         $this->codigo = $codigo;
@@ -59,191 +60,206 @@ class Auxiliares extends Roles {
         $this->email = $email;
         $this->clave = $clave;
         $this->fecharegistro = $fecharegistro;
+        $this->estado = $estado;
     }
+
      
-     function getIdAuxiliar() {
-         return $this->idAuxiliar;
-     }
+    function getIdAuxiliar() {
+        return $this->idAuxiliar;
+    }
 
-     function getCodigo() {
-         return $this->codigo;
-     }
+    function getCodigo() {
+        return $this->codigo;
+    }
 
-     function getRol() {
-         return $this->Rol;
-     }
+    function getRol() {
+        return $this->Rol;
+    }
 
-     function getTipoidentificacion() {
-         return $this->tipoidentificacion;
-     }
+    function getTipoidentificacion() {
+        return $this->tipoidentificacion;
+    }
 
-     function getIdentificacion() {
-         return $this->identificacion;
-     }
+    function getIdentificacion() {
+        return $this->identificacion;
+    }
 
-     function getNombre() {
-         return $this->nombre;
-     }
+    function getNombre() {
+        return $this->nombre;
+    }
 
-     function getApellido() {
-         return $this->apellido;
-     }
+    function getApellido() {
+        return $this->apellido;
+    }
 
-     function getApellidocasada() {
-         return $this->apellidocasada;
-     }
+    function getApellidocasada() {
+        return $this->apellidocasada;
+    }
 
-     function getGenero() {
-         return $this->genero;
-     }
+    function getGenero() {
+        return $this->genero;
+    }
 
-     function getFechanacimiento() {
-         return $this->fechanacimiento;
-     }
+    function getFechanacimiento() {
+        return $this->fechanacimiento;
+    }
 
-     function getTiposangre() {
-         return $this->tiposangre;
-     }
+    function getTiposangre() {
+        return $this->tiposangre;
+    }
 
-     function getTelefono() {
-         return $this->telefono;
-     }
+    function getTelefono() {
+        return $this->telefono;
+    }
 
-     function getCelular() {
-         return $this->celular;
-     }
+    function getCelular() {
+        return $this->celular;
+    }
 
-     function getEstadocivil() {
-         return $this->estadocivil;
-     }
+    function getEstadocivil() {
+        return $this->estadocivil;
+    }
 
-     function getOcupacion() {
-         return $this->ocupacion;
-     }
+    function getOcupacion() {
+        return $this->ocupacion;
+    }
 
-     function getReligion() {
-         return $this->religion;
-     }
+    function getReligion() {
+        return $this->religion;
+    }
 
-     function getPais() {
-         return $this->pais;
-     }
+    function getPais() {
+        return $this->pais;
+    }
 
-     function getDepartamento() {
-         return $this->departamento;
-     }
+    function getDepartamento() {
+        return $this->departamento;
+    }
 
-     function getMunicipio() {
-         return $this->municipio;
-     }
+    function getMunicipio() {
+        return $this->municipio;
+    }
 
-     function getDomicilio() {
-         return $this->domicilio;
-     }
+    function getDomicilio() {
+        return $this->domicilio;
+    }
 
-     function getEmail() {
-         return $this->email;
-     }
+    function getEmail() {
+        return $this->email;
+    }
 
-     function getClave() {
-         return $this->clave;
-     }
+    function getClave() {
+        return $this->clave;
+    }
 
-     function getFecharegistro() {
-         return $this->fecharegistro;
-     }
+    function getFecharegistro() {
+        return $this->fecharegistro;
+    }
 
-     function setIdAuxiliar($idAuxiliar) {
-         $this->idAuxiliar = $idAuxiliar;
-     }
+    function setIdAuxiliar($idAuxiliar) {
+        $this->idAuxiliar = $idAuxiliar;
+    }
 
-     function setCodigo($codigo) {
-         $this->codigo = $codigo;
-     }
+    function setCodigo($codigo) {
+        $this->codigo = $codigo;
+    }
 
-     function setRol($Rol) {
-         $this->Rol = $Rol;
-     }
+    function setRol($Rol) {
+        $this->Rol = $Rol;
+    }
 
-     function setTipoidentificacion($tipoidentificacion) {
-         $this->tipoidentificacion = $tipoidentificacion;
-     }
+    function setTipoidentificacion($tipoidentificacion) {
+        $this->tipoidentificacion = $tipoidentificacion;
+    }
 
-     function setIdentificacion($identificacion) {
-         $this->identificacion = $identificacion;
-     }
+    function setIdentificacion($identificacion) {
+        $this->identificacion = $identificacion;
+    }
 
-     function setNombre($nombre) {
-         $this->nombre = $nombre;
-     }
+    function setNombre($nombre) {
+        $this->nombre = $nombre;
+    }
 
-     function setApellido($apellido) {
-         $this->apellido = $apellido;
-     }
+    function setApellido($apellido) {
+        $this->apellido = $apellido;
+    }
 
-     function setApellidocasada($apellidocasada) {
-         $this->apellidocasada = $apellidocasada;
-     }
+    function setApellidocasada($apellidocasada) {
+        $this->apellidocasada = $apellidocasada;
+    }
 
-     function setGenero($genero) {
-         $this->genero = $genero;
-     }
+    function setGenero($genero) {
+        $this->genero = $genero;
+    }
 
-     function setFechanacimiento($fechanacimiento) {
-         $this->fechanacimiento = $fechanacimiento;
-     }
+    function setFechanacimiento($fechanacimiento) {
+        $this->fechanacimiento = $fechanacimiento;
+    }
 
-     function setTiposangre($tiposangre) {
-         $this->tiposangre = $tiposangre;
-     }
+    function setTiposangre($tiposangre) {
+        $this->tiposangre = $tiposangre;
+    }
 
-     function setTelefono($telefono) {
-         $this->telefono = $telefono;
-     }
+    function setTelefono($telefono) {
+        $this->telefono = $telefono;
+    }
 
-     function setCelular($celular) {
-         $this->celular = $celular;
-     }
+    function setCelular($celular) {
+        $this->celular = $celular;
+    }
 
-     function setEstadocivil($estadocivil) {
-         $this->estadocivil = $estadocivil;
-     }
+    function setEstadocivil($estadocivil) {
+        $this->estadocivil = $estadocivil;
+    }
 
-     function setOcupacion($ocupacion) {
-         $this->ocupacion = $ocupacion;
-     }
+    function setOcupacion($ocupacion) {
+        $this->ocupacion = $ocupacion;
+    }
 
-     function setReligion($religion) {
-         $this->religion = $religion;
-     }
+    function setReligion($religion) {
+        $this->religion = $religion;
+    }
 
-     function setPais($pais) {
-         $this->pais = $pais;
-     }
+    function setPais($pais) {
+        $this->pais = $pais;
+    }
 
-     function setDepartamento($departamento) {
-         $this->departamento = $departamento;
-     }
+    function setDepartamento($departamento) {
+        $this->departamento = $departamento;
+    }
 
-     function setMunicipio($municipio) {
-         $this->municipio = $municipio;
-     }
+    function setMunicipio($municipio) {
+        $this->municipio = $municipio;
+    }
 
-     function setDomicilio($domicilio) {
-         $this->domicilio = $domicilio;
-     }
+    function setDomicilio($domicilio) {
+        $this->domicilio = $domicilio;
+    }
 
-     function setEmail($email) {
-         $this->email = $email;
-     }
+    function setEmail($email) {
+        $this->email = $email;
+    }
 
-     function setClave($clave) {
-         $this->clave = $clave;
-     }
+    function setClave($clave) {
+        $this->clave = $clave;
+    }
 
-     function setFecharegistro($fecharegistro) {
-         $this->fecharegistro = $fecharegistro;
-     }
+    function setFecharegistro($fecharegistro) {
+        $this->fecharegistro = $fecharegistro;
+    }
+    
+    function getEstado() {
+        return $this->estado;
+    }
+
+    function setEstado($estado) {
+        $this->estado = $estado;
+    }
+
+
+
+
+     
 }
 
 ?>
