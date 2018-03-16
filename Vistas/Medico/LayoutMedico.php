@@ -35,7 +35,7 @@
         <link href="../Recursos/css/session.css" rel="stylesheet" type="text/css"/>
         <link href="../Recursos/css/layout.css" rel="stylesheet" type="text/css"/>
         <link href="../Recursos/css/fullcalendar.min.css" rel="stylesheet" type="text/css"/>
-        <link href="../Recursos/css/fullcalendar.print.min.css" rel="stylesheet" type="text/css"/>
+        <link href="../Recursos/css/fullcalendar.print.min.css" rel='stylesheet' media='print' />
     </head>
     <body>
         <div class="ui-layout-north">
@@ -72,8 +72,10 @@
         <script src="../Recursos/js/jszip.min.js" type="text/javascript"></script>
         <script src="../Recursos/js/vfs_fonts.js" type="text/javascript"></script>
         <script src="../Recursos/js/dropdown.js" type="text/javascript"></script>
-        <script src="../Recursos/js/moment.min.js" type="text/javascript"></script>
-        <script src="../Recursos/js/fullcalendar.min.js" type="text/javascript"></script>
         <script src="../Recursos/js/modal.js" type="text/javascript"></script>
+        <script src="js/medico.js" type="text/javascript"></script>
+        
+        <script src='../Recursos/js/moment.min.js'></script>
+        <script src='../Recursos/js/fullcalendar.min.js'></script>
     </body>   
 </html>
