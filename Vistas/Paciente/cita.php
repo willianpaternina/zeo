@@ -14,7 +14,6 @@
                 <p>MEDICOS DISPONIBLES</p>
             </div>
             <div class="ui secondary segment">
-                <button class="ui blue button abrir_modal" ><i class="fa fa-arrow-left"></i> modal</button>
                 <?php for($i=0;$i<sizeof($listaMedicos);$i++) : ?>
                 <div class="ui raised segment botoneraexcelpdfpaciente medicos">
                     <table class="ui celled table" cellspacing="0" width="100%">
@@ -68,7 +67,7 @@
                 <tr>
                     <th>
                         <div class="ui fluid input focus">
-                            <input type="text" placeholder="Ingresar motivo de la cita medica" id="motivoCitaMedida">
+                            <input type="text" placeholder="Ingresar motivo de la cita medica" id="_motivoCitaMedica">
                         </div>
                     </th>
                 </tr>

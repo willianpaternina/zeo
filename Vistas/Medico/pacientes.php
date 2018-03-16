@@ -11,7 +11,7 @@
 ?>
 <div class="ui segments">
     <div class="ui blue inverted segment">
-        <h4>MÓDULO DE PACIENTES</h4>
+        <h4>MÓDULO DE PACIENTES asdasd</h4>
     </div>
     <div class="ui secondary segment">
         <div class="ui segments">
@@ -80,7 +80,7 @@
                         </table>
                     </div>
                     <div class="actions">
-                        <button class="ui orange button"><i class="fa fa-edit"></i> Editar</button>
+                        
                     </div>
                 </div>
                 <!-- fin modal ver detalle del paciente-->

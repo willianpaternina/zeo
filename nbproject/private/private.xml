@@ -14,8 +14,9 @@
         <group>
             <file>file:/C:/xampp/htdocs/zeo/Vistas/Recursos/js/modal.js</file>
             <file>file:/C:/xampp/htdocs/zeo/Configuracion/Conexion.php</file>
+            <file>file:/C:/xampp/htdocs/zeo/Controladores/PacientesControlador.php</file>
             <file>file:/C:/xampp/htdocs/zeo/Vistas/Medico/pacientes.php</file>
-            <file>file:/C:/xampp/htdocs/zeo/Configuracion/cfg.php</file>
+            <file>file:/C:/xampp/htdocs/zeo/Padlock/validatesessionpaciente.php</file>
             <file>file:/C:/xampp/htdocs/zeo/Vistas/Paciente/cita.php</file>
             <file>file:/C:/xampp/htdocs/zeo/Vistas/Paciente/js/paciente.js</file>
             <file>file:/C:/xampp/htdocs/zeo/Configuracion/RouterAdministrador.php</file>
