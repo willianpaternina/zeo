@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 16-03-2018 a las 22:37:25
+-- Tiempo de generación: 17-03-2018 a las 00:15:15
 -- Versión del servidor: 10.1.30-MariaDB
 -- Versión de PHP: 7.2.2
 
@@ -68,17 +68,17 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_RegistrarAuxiliar` (IN `sp_codig
 	 END;
  END IF$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_RegistrarCita` (IN `sp_Paciente` INT, IN `sp_Horario` INT, IN `sp_Concepto` VARCHAR(100), IN `sp_Estado` VARCHAR(35), INOUT `sp_Message` VARCHAR(100))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_RegistrarCita` (IN `sp_Paciente` INT, IN `sp_Horario` INT, IN `sp_Concepto` VARCHAR(100), IN `sp_Estado` VARCHAR(35))  BEGIN
 	IF NOT EXISTS (SELECT Paciente, Horario, estado FROM cita WHERE Paciente = sp_Paciente AND  Horario = sp_Horario AND estado = sp_Estado )THEN
 		 BEGIN
 			INSERT INTO cita (idCIta, Paciente, Horario, concepto, estado, fecha_registro)
 			values( null, sp_paciente, sp_Horario, sp_concepto, sp_Estado, now()  );
-			select sp_Message = 'registro ingresado con exito' ;
+			select 'ok' as exito ;
           
 		 END;
 	 ELSE
 		 BEGIN
-			 select sp_Message = 'Ya ha tomado una cita con el medico, especialidad y fecha, por favor cambie alguno de estos items.' ;
+			 select 'no_ok' as response ;
 		 END;
 	 END IF;
      
@@ -190,8 +190,7 @@ CREATE TABLE `cita` (
 --
 
 INSERT INTO `cita` (`idCita`, `Paciente`, `Horario`, `concepto`, `estado`, `fecha_registro`) VALUES
-(10, 1, 1, 'CHQUEO RUTINARIO', 'ESPERA_ATENCION', '2018-03-16'),
-(11, 2, 1, 'DOLOR DE MUSCULOS', 'ESPERA_ATENCION', '2018-03-16');
+(2, 1, 1, 'CONSULTA RUTINARIA', 'ESPERA_ATENCION', '2018-03-16');
 
 -- --------------------------------------------------------
 
@@ -456,7 +455,7 @@ ALTER TABLE `auxiliares`
 -- AUTO_INCREMENT de la tabla `cita`
 --
 ALTER TABLE `cita`
-  MODIFY `idCita` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `idCita` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `consultorio`
