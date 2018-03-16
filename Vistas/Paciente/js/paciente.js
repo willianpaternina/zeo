@@ -6,17 +6,17 @@
 $(function(){   
     
     $("#back").on("click", function(){
-        $(".medicos").show();
-        $(".horario").hide();
+        $(".medicos").show(500);
+        $(".horario").hide(1500);
         $('#calendar').fullCalendar('destroy');
-        $('#calendar').fullCalendar('destroy');
+        $("#motivoCitaMedida").val("")
     })
     
 })
 
-var horario = function(id_medico){
-     
-    $(".medicos").hide();
+var horario = function(id_medico, id_especialidad){
+    
+    $(".medicos").hide(1500);
     $(".horario").show();
     $('#calendar').fullCalendar({
         header: {
@@ -25,12 +25,15 @@ var horario = function(id_medico){
         right: 'month,basicWeek'
       },
         defaultDate: horaActual(),
-        defaultView: 'month',
+        defaultView: 'month',  
+        navLinks: true, // can click day/week names to navigate views
+        editable: true,
         events: {
              type: 'POST',
              cache: false,
              data: {
-               idMedico: id_medico  
+               idMedico: id_medico,
+               idEspecialidad: id_especialidad
              },
              url: 'http://localhost/zeo/Controladores/MedicosControlador.php',
              error: function(response) {
@@ -38,7 +41,16 @@ var horario = function(id_medico){
                  //alert('there was an error while fetching events!');
               },
              
-          },         
+          },
+          eventClick: function(calEvent, jsEvent, view) {
+                $(".confirmar_cita").modal('show');
+                $(".confirmar_cita").modal({
+                    closable: true
+                });
+            console.log('Event: ' + calEvent.id + 'Id_paciente: ' + $("#btnhorario").val() );
+            return;
+
+          }
     });
     
 }
@@ -60,3 +72,17 @@ var horaActual = function(){
     return hoy
 
     }
+    
+ /*
+  * VENTANA MODAL CITAS
+  */
+ $(".abrir_modal").on("click", function () {
+    $(".confirmar_cita").modal('show');
+    $(".confirmar_cita").modal({
+        closable: true
+    });
+});
+
+$("#_btnGuardarCita").on("click", function(){
+    alert("guardar cita XD")
+})

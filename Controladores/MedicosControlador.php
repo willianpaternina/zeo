@@ -139,10 +139,11 @@ class MedicosControlador extends Conexion implements IMedicos {
         return $this->result;
         
     }
-    public function horarioMedico($Medico) {
-        $sql = "CALL sp_horarioMedico (?);";
+    public function horarioMedico($Medico, $Especialidad) {
+        $sql = "CALL sp_horarioMedico (?, ?);";
         $stmt = $this->cnn->prepare($sql);
         $stmt->bindParam(1, $Medico);
+        $stmt->bindParam(2, $Especialidad);
         $stmt->execute();
         
         $data = array();
@@ -154,10 +155,10 @@ class MedicosControlador extends Conexion implements IMedicos {
     }
 
 }
-if(isset($_POST["idMedico"])){
+if(isset($_POST["idMedico"]) and isset($_POST["idEspecialidad"]) ){
     //print_r($_POST);exit;
     $controlador = new MedicosControlador();
-    $r = $controlador->horarioMedico($_POST["idMedico"]);
+    $r = $controlador->horarioMedico($_POST["idMedico"], $_POST["idEspecialidad"]);
 
     echo json_encode($r);
 }
