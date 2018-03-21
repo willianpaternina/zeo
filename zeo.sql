@@ -22,6 +22,51 @@ SET time_zone = "+00:00";
 -- Base de datos: `zeo`
 --
 
+ DELIMITER $$
+ CREATE PROCEDURE sp_GetMedicos()
+   BEGIN
+   SELECT * FROM Medicos;
+   END $$
+ DELIMITER ;
+
+-- CALL sp_GetMedicos();
+
+ DELIMITER $$
+ CREATE PROCEDURE sp_RegisterMedicos
+ (
+	IN sp_codigo VARCHAR (60),
+	IN sp_tipoidentificacion CHAR (2),
+	IN sp_identificacion BIGINT (20),
+	IN sp_nombre VARCHAR (25),
+	IN sp_apellido VARCHAR (35),
+	IN sp_apellidocasada VARCHAR (35),
+	IN sp_genero CHAR (1),
+	IN sp_fechanacimiento DATE,
+	IN sp_tiposangre CHAR (4),
+	IN sp_telefono BIGINT (7),
+	IN sp_celular BIGINT (10),
+	IN sp_estadocivil VARCHAR (35),
+	IN sp_ocupacion VARCHAR (80),
+	IN sp_religion VARCHAR (50),
+	IN sp_pais VARCHAR (35),
+	IN sp_departamento VARCHAR (50),
+	IN sp_municipio VARCHAR (60),
+	IN sp_domicilio VARCHAR (120),
+	IN sp_email VARCHAR (120),
+	IN sp_clave VARCHAR (60),
+	IN sp_estado INT (1)
+ )
+ BEGIN
+	INSERT INTO medicos (codigo, tipoidentificacion, identificacion, nombre, apellido, apellidocasada, 
+						   genero, fechanacimiento, tiposangre, telefono, celular, estadocivil, ocupacion,
+						   religion, pais, departamento, municipio, domicilio, email, clave) 
+	VALUES (sp_codigo, sp_tipoidentificacion, sp_identificacion, sp_nombre, sp_apellido, sp_apellidocasada, 
+			sp_genero, sp_fechanacimiento, sp_tiposangre, sp_telefono, sp_celular, sp_estadocivil, sp_ocupacion,
+			sp_religion, sp_pais, sp_departamento, sp_municipio, sp_domicilio, sp_email, sp_clave, sp_estado); 
+ END $$
+ DELIMITER ;
+
+
 DELIMITER $$
 --
 -- Procedimientos
