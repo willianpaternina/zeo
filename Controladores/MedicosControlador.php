@@ -3,6 +3,7 @@
 require_once $_SERVER['DOCUMENT_ROOT'] . "/Zeo/Configuracion/Conexion.php";
 require_once $_SERVER['DOCUMENT_ROOT'] . "/Zeo/Dao/IMedicos.php";
 require_once $_SERVER['DOCUMENT_ROOT'] . "/Zeo/Modelo/Sesion.php";
+require_once $_SERVER['DOCUMENT_ROOT']."/Zeo/Modelo/Especialidades.php";
 
 /**
  * Description of MedicosControlador
@@ -202,6 +203,60 @@ class MedicosControlador extends Conexion implements IMedicos {
         }
     }
 
+    public function medicosEspecialidades($id_medico) {
+        try {
+            $sql = "select idEspecialidades, especialidad, detalle from espacialidades where Medico = ?;";
+            //echo $sql;exit;
+            $stmt = $this->cnn->prepare($sql);
+            $stmt->bindParam(1, $id_medico);
+
+            $stmt->execute();
+            
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $this->result[] = $row;
+            }
+            return $this->result;
+            
+        } catch (PDOException $e) {
+            die($e->getMessage());
+        }
+    }
+
+    public function registrarEspecialidad(Especialidades $Especialidad) {
+        try {
+            $sql = "CALL sp_registrarEspecilidad (?, ?, ?);";
+            $stmt = $this->cnn->prepare($sql);
+            $stmt->bindParam(1, $Especialidad->getMedico());
+            $stmt->bindParam(2, $Especialidad->getEspecialidad());
+            $stmt->bindParam(3, $Especialidad->getDetalleespecialidad());
+
+            $stmt->execute();
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $this->result[] = $row;
+            }
+            return $this->result;
+        } catch (PDOException $e) {
+            die($e->getMessage());
+        }
+    }
+
+    public function actualizarEspecialidad(Especialidades $Especialidad) {
+        try {
+            $sql = "CALL sp_actualizarEspecialidad (?, ?);";
+            $stmt = $this->cnn->prepare($sql);
+            $stmt->bindParam(1, $Especialidad->getIdEspecialidades());
+            $stmt->bindParam(2, $Especialidad->getDetalleespecialidad());
+            
+            $stmt->execute();
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $this->result[] = $row;
+            }
+            return $this->result;
+        } catch (PDOException $e) {
+            die($e->getMessage());
+        }
+    }
+
 }
 
 if (isset($_POST["idMedico"]) and isset($_POST["idEspecialidad"])) {
@@ -220,6 +275,49 @@ if (isset($_POST["citaMedica"])) {
     session_start();
     $controlador = new MedicosControlador();
     $r = $controlador->horarioCitaPaciente($_SESSION["idMedico"]);
+    echo json_encode($r);
+    return;
+}
+if(isset($_GET["medicoEspecialidades"]) && $_GET["medicoEspecialidades"]=="especialidad" ){
+    session_start();
+    $controlador = new MedicosControlador();
+    $r = $controlador->medicosEspecialidades($_SESSION["idMedico"]);
+    echo '{
+            "data": [';
+            for($i=0;$i<count($r)-1;$i++){
+            echo ' 
+              [
+                "'.($i+1).'",
+                "'.$r[$i]["especialidad"].'",
+                "'.$r[$i]["detalle"].'",
+                "'.$r[$i]["idEspecialidades"].'"
+              ],';
+            }
+            echo ' 
+              [
+                "'.(count($r)).'",
+                "'.$r[$i]["especialidad"].'",
+                "'.$r[$i]["detalle"].'",
+                "'.$r[$i]["idEspecialidades"].'"
+              ]
+            ]
+          }';
+    return;
+    
+}
+if(isset($_GET["medicoEspecialidades"]) && $_GET["medicoEspecialidades"]=="RegistrarEspecialidad" ){
+    error_reporting(0);
+    session_start();
+    $controlador = new MedicosControlador();
+    $r = $controlador->registrarEspecialidad(new Especialidades(0, $_SESSION["idMedico"], $_POST["especialidad"], $_POST["detalle"]));
+    echo json_encode($r);
+    return;
+}
+if(isset($_GET["medicoEspecialidades"]) && $_GET["medicoEspecialidades"]=="ActualizarEspecialidad" ){
+    error_reporting(0);
+    session_start();
+    $controlador = new MedicosControlador();
+    $r = $controlador->actualizarEspecialidad(new Especialidades($_POST["idEspecialidad"], null, null, $_POST["detalle"]));
     echo json_encode($r);
     return;
 }

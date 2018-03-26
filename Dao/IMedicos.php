@@ -17,6 +17,9 @@ interface IMedicos {
      public function horarioMedico($Medico, $Especialidad);
      public function registrarCita($id_paciente, $id_horario, $concepto, $estado);
      public function horarioCitaPaciente($id_medico);
+     public function medicosEspecialidades($id_medico);
+     public function registrarEspecialidad(Especialidades $Especialidad);
+     public function actualizarEspecialidad(Especialidades $Especialidad);
 }
 
 ?>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 17-03-2018 a las 00:15:15
+-- Tiempo de generación: 26-03-2018 a las 03:09:40
 -- Versión del servidor: 10.1.30-MariaDB
 -- Versión de PHP: 7.2.2
 
@@ -22,55 +22,15 @@ SET time_zone = "+00:00";
 -- Base de datos: `zeo`
 --
 
- DELIMITER $$
- CREATE PROCEDURE sp_GetMedicos()
-   BEGIN
-   SELECT * FROM Medicos;
-   END $$
- DELIMITER ;
-
--- CALL sp_GetMedicos();
-
- DELIMITER $$
- CREATE PROCEDURE sp_RegisterMedicos
- (
-	IN sp_codigo VARCHAR (60),
-	IN sp_tipoidentificacion CHAR (2),
-	IN sp_identificacion BIGINT (20),
-	IN sp_nombre VARCHAR (25),
-	IN sp_apellido VARCHAR (35),
-	IN sp_apellidocasada VARCHAR (35),
-	IN sp_genero CHAR (1),
-	IN sp_fechanacimiento DATE,
-	IN sp_tiposangre CHAR (4),
-	IN sp_telefono BIGINT (7),
-	IN sp_celular BIGINT (10),
-	IN sp_estadocivil VARCHAR (35),
-	IN sp_ocupacion VARCHAR (80),
-	IN sp_religion VARCHAR (50),
-	IN sp_pais VARCHAR (35),
-	IN sp_departamento VARCHAR (50),
-	IN sp_municipio VARCHAR (60),
-	IN sp_domicilio VARCHAR (120),
-	IN sp_email VARCHAR (120),
-	IN sp_clave VARCHAR (60),
-	IN sp_estado INT (1)
- )
- BEGIN
-	INSERT INTO medicos (codigo, tipoidentificacion, identificacion, nombre, apellido, apellidocasada, 
-						   genero, fechanacimiento, tiposangre, telefono, celular, estadocivil, ocupacion,
-						   religion, pais, departamento, municipio, domicilio, email, clave) 
-	VALUES (sp_codigo, sp_tipoidentificacion, sp_identificacion, sp_nombre, sp_apellido, sp_apellidocasada, 
-			sp_genero, sp_fechanacimiento, sp_tiposangre, sp_telefono, sp_celular, sp_estadocivil, sp_ocupacion,
-			sp_religion, sp_pais, sp_departamento, sp_municipio, sp_domicilio, sp_email, sp_clave, sp_estado); 
- END $$
- DELIMITER ;
-
-
 DELIMITER $$
 --
 -- Procedimientos
 --
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_actualizarEspecialidad` (IN `sp_idEspecialidades` INT, IN `sp_detalle` VARCHAR(200))  BEGIN
+	UPDATE espacialidades SET detalle = sp_detalle WHERE idEspecialidades = sp_idEspecialidades;
+    select 'ok' as exito ;
+ END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_GetPacientes` ()  BEGIN 
 	select * from cita as C INNER JOIN pacientes as P ON C.Paciente = P.idPaciente;
  END$$
@@ -128,6 +88,18 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_RegistrarCita` (IN `sp_Paciente`
 	 END IF;
      
  END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_registrarEspecilidad` (IN `sp_Medico` INT, IN `sp_especialidad` VARCHAR(60), IN `sp_detalle` VARCHAR(200))  IF NOT EXISTS (SELECT Medico, especialidad FROM espacialidades WHERE Medico = sp_Medico AND especialidad = sp_especialidad )THEN
+	 BEGIN		
+		INSERT INTO espacialidades (idEspecialidades, Medico, especialidad, detalle) 
+		VALUES (null, sp_Medico, sp_especialidad, sp_detalle); 
+        select 'ok' as exito ;
+	 END;
+ ELSE
+	 BEGIN
+		 select 'no_ok' as response ;
+	 END;
+ END IF$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_rol` ()  BEGIN
 select * from roles;
@@ -235,7 +207,8 @@ CREATE TABLE `cita` (
 --
 
 INSERT INTO `cita` (`idCita`, `Paciente`, `Horario`, `concepto`, `estado`, `fecha_registro`) VALUES
-(2, 1, 1, 'CONSULTA RUTINARIA', 'ESPERA_ATENCION', '2018-03-16');
+(2, 1, 1, 'CONSULTA RUTINARIA', 'ESPERA_ATENCION', '2018-03-16'),
+(3, 2, 1, 'DOLOR DE MUSCULOS', 'ESPERA_ATENCION', '2018-03-16');
 
 -- --------------------------------------------------------
 
@@ -269,7 +242,7 @@ CREATE TABLE `espacialidades` (
   `idEspecialidades` int(11) NOT NULL,
   `Medico` int(11) NOT NULL,
   `especialidad` varchar(60) COLLATE utf8_spanish_ci NOT NULL,
-  `detalle` varchar(200) COLLATE utf8_spanish_ci NOT NULL
+  `detalle` text COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
@@ -277,9 +250,18 @@ CREATE TABLE `espacialidades` (
 --
 
 INSERT INTO `espacialidades` (`idEspecialidades`, `Medico`, `especialidad`, `detalle`) VALUES
-(1, 1, 'ONCOLOGIA OSEA', 'TRATAMIENTO DE LOS HUESOS\r\n'),
-(2, 2, 'ONCOLOGIA OBSTETRICIA', 'TRATAMIENTO DEL APARATO REPRODUCTOR FEMENINO'),
-(3, 1, 'ONCOLOGIA PULMONAR', 'TRATAMIENTO DE CANCER DE PULMON');
+(1, 1, 'ONCOLOGIA OSEA', 'ONCOLOGIA OSEA'),
+(2, 2, 'ONCOLOGIA OBSTETRICIA', 'ONCOLOGIA OBSTETRICIA'),
+(3, 1, 'ONCOLOGIA PULMONAR', 'ONCOLOGIA PULMONAR'),
+(8, 1, 'ONCOLOGO RADIOLOGO', 'ONCOLOGIA TECNOLOGICA'),
+(9, 1, 'ONCOLOGO NEONATAL', 'ONCOLOGO NEONATAL'),
+(10, 1, 'ONCOLOGIA FRENTAL', 'ONCOLOGIA FRENTAL'),
+(11, 1, 'ONCOLOGIA PRUEBA', 'ONCOLOGIA PRUEBA'),
+(12, 1, 'DEMO', 'DEMO PRUEBA'),
+(13, 1, 'PRUEBa', 'PRUEBA'),
+(14, 1, 'ONCOLOGIA CEREBRAL', 'ESTUDIO COMPLETO de la cabeza'),
+(16, 1, 'ONCOLOGIA NEURAL', 'oncologia neura'),
+(17, 1, 'adas', 'adasd');
 
 -- --------------------------------------------------------
 
@@ -500,7 +482,7 @@ ALTER TABLE `auxiliares`
 -- AUTO_INCREMENT de la tabla `cita`
 --
 ALTER TABLE `cita`
-  MODIFY `idCita` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idCita` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `consultorio`
@@ -512,7 +494,7 @@ ALTER TABLE `consultorio`
 -- AUTO_INCREMENT de la tabla `espacialidades`
 --
 ALTER TABLE `espacialidades`
-  MODIFY `idEspecialidades` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idEspecialidades` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT de la tabla `horario`
