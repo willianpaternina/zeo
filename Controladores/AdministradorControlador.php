@@ -116,7 +116,8 @@ class AdministradorControlador extends Conexion implements IAdministradores {
                 $medicos->getMunicipio('municipio'),
                 $medicos->getDomicilio('domicilio'),
                 $medicos->getEmail('email'),
-                $medicos->getClave('clave'))
+                $medicos->getClave('clave'),
+                $medicos->getEstado('estado'))
             );
         } catch (PDOException $e) {
             die($e->getMessage());

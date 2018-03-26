@@ -74,8 +74,7 @@
         <script src="../Recursos/js/dropdown.js" type="text/javascript"></script>
         <script src="../Recursos/js/modal.js" type="text/javascript"></script>
         <script src="js/medico.js" type="text/javascript"></script>
-        
-        <script src='../Recursos/js/moment.min.js'></script>
-        <script src='../Recursos/js/fullcalendar.min.js'></script>
+        <script src='../Recursos/js/moment.min.js' type="text/javascript"></script>
+        <script src='../Recursos/js/fullcalendar.min.js' type="text/javascript"></script>
     </body>   
 </html>

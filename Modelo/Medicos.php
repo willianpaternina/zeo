@@ -32,8 +32,9 @@ class Medicos extends Roles {
      private $email;
      private $clave;
      private $fecharegistro;
+     private $estado;
      
-     public function __Medicos ($idRol, $rol, $detalle, $idMedico, $codigo, $Rol, $tipoidentificacion, $identificacion, $nombre, $apellido, $apellidocasada, $genero, $fechanacimiento, $tiposangre, $telefono, $celular, $estadocivil, $ocupacion, $religion, $pais, $departamento, $municipio, $domicilio, $email, $clave, $fecharegistro) {
+     public function __Medicos ($idRol, $rol, $detalle, $idMedico, $codigo, $Rol, $tipoidentificacion, $identificacion, $nombre, $apellido, $apellidocasada, $genero, $fechanacimiento, $tiposangre, $telefono, $celular, $estadocivil, $ocupacion, $religion, $pais, $departamento, $municipio, $domicilio, $email, $clave, $fecharegistro, $estado) {
         parent::__Roles($idRol, $rol, $detalle);
         $this->idMedico = $idMedico;
         $this->codigo = $codigo;
@@ -58,6 +59,7 @@ class Medicos extends Roles {
         $this->email = $email;
         $this->clave = $clave;
         $this->fecharegistro = $fecharegistro;
+        $this->estado = $estado;
     }
      
      function getIdMedico() {
@@ -151,6 +153,10 @@ class Medicos extends Roles {
      function getFecharegistro() {
          return $this->fecharegistro;
      }
+     
+     function getEstado() {
+         return $this->estado;
+     }
 
      function setIdMedico($idMedico) {
          $this->idMedico = $idMedico;
@@ -242,6 +248,10 @@ class Medicos extends Roles {
 
      function setFecharegistro($fecharegistro) {
          $this->fecharegistro = $fecharegistro;
+     }
+     
+     function setEstado($estado) {
+         $this->estado = $estado;
      }
 }
 

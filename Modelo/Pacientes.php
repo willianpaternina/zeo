@@ -32,8 +32,10 @@ class Pacientes extends Roles {
     private $email;
     private $clave;
     private $fecharegistro;
-    
-    public function __Pacientes ($idRol, $rol, $detalle, $idPaciente, $codigo, $Rol, $tipoidentificacion, $identificacion, $nombre, $apellido, $apellidocasada, $genero, $fechanacimiento, $tiposangre, $telefono, $celular, $estadocivil, $ocupacion, $religion, $pais, $departamento, $municipio, $domicilio, $email, $clave, $fecharegistro) {
+    private $estado;
+
+
+    public function __Pacientes ($idRol, $rol, $detalle, $idPaciente, $codigo, $Rol, $tipoidentificacion, $identificacion, $nombre, $apellido, $apellidocasada, $genero, $fechanacimiento, $tiposangre, $telefono, $celular, $estadocivil, $ocupacion, $religion, $pais, $departamento, $municipio, $domicilio, $email, $clave, $fecharegistro, $estado) {
         parent::__Roles($idRol, $rol, $detalle);
         $this->idPaciente = $idPaciente;
         $this->codigo = $codigo;
@@ -58,6 +60,7 @@ class Pacientes extends Roles {
         $this->email = $email;
         $this->clave = $clave;
         $this->fecharegistro = $fecharegistro;
+        $this->estado = $estado;
     }
     
     function getIdPaciente() {
@@ -151,6 +154,10 @@ class Pacientes extends Roles {
     function getFecharegistro() {
         return $this->fecharegistro;
     }
+    
+    function getEstado() {
+        return $this->estado;
+    }
 
     function setIdPaciente($idPaciente) {
         $this->idPaciente = $idPaciente;
@@ -242,7 +249,13 @@ class Pacientes extends Roles {
 
     function setFecharegistro($fecharegistro) {
         $this->fecharegistro = $fecharegistro;
-    }    
+    }
+    
+    function setEstado($estado) {
+        $this->estado = $estado;
+    }
+
+
 }
 
 ?>
