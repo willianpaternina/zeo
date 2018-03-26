@@ -15,6 +15,15 @@ class RouterMedico {
             case 'pacientes':
                 include_once ('../../Vistas/Medico/' . $view . '.php');
                 break;
+            case 'auxiliares':
+                include_once ('../../Vistas/Medico/' . $view . '.php');
+                break;
+            case 'especialidad':
+                include_once ('../../Vistas/Medico/' . $view . '.php');
+                break;
+            case 'horario':
+                include_once ('../../Vistas/Medico/' . $view . '.php');
+                break;
             case 'regpaciente':
                 include_once ('../../Vistas/Medico/' . $view . '.php');
                 break;

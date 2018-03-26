@@ -1,4 +1,31 @@
 $(function(){
+     /*
+      * VALIDACION FORMULARIO ADDAUXILIAR
+      */     
+    $('.ui.form.auxiliar')
+    .form({
+      fields: {
+        nombre     : 'empty',
+        tident   : 'empty',
+        identificacion : ['minLength[4]', 'empty'],
+        apellido : ['minLength[3]', 'empty'],
+        genero   : 'empty',
+        fechanac    : 'checked',
+        tiposangre : 'empty',
+        ocupacion : 'empty',
+        religion : 'empty',
+        email: 'empty',
+        clave: ['minLength[4]', 'empty']
+      },
+      onSuccess : function(e){
+          e.preventDefault();
+          alert("tofo ok");
+      }
+    })    
+     
+    /*
+     * CALENDARIO VISTA INICIO MEDICO
+     */
     $('#calendar').fullCalendar({
         header: {
         left: 'prev,next today',
@@ -23,6 +50,11 @@ $(function(){
           },
   })
 })
+
+
+/*
+ * FUNCION RETORNA HORA ACTUAL, SE UTILIZA EN EL CALENDARIO
+ */
 var horaActual = function(){
     var hoy = new Date();
     var dd = hoy.getDate();
