@@ -161,4 +161,109 @@
         
     </div>
 </div>
+<!-- FIN MODAL REGISTRAR USUARIOS-->
+
+<!-- VENTANA MODAL PARA VER AUXILIARES -->
+<div class="ui fullscreen modal verAuxiliar">
+    <i class="close icon"></i>
+    <div class="header">
+        <h4>VER AUXILIAR</h4>
+    </div>
+    <div class="content">
+        <form class="ui form auxiliar" id="frmVerAuxiliar">
+            <div class="fields">
+                <div class="four wide field">
+                    <label>Identificación</label>
+                    <input type="text"  id="ver_identificacion" placeholder="Num identificacion" readonly="">
+                </div>
+                <div class="four wide field">
+                    <label> Nombre</label>
+                    <input type="text" id="ver_nombre" placeholder="Num identificacion" readonly="">
+                </div>
+                <div class=" four wide field">
+                    <label>Apellido</label>
+                    <input type="text" id="ver_apellido" placeholder="Nombres" readonly="">
+                </div>
+                <div class="four wide field">
+                    <label>Apellido casado</label>
+                    <input type="text"  id="ver_apellidocasado" placeholder="Apellidos" readonly="">
+                </div>
+                
+            </div>
+            <div class="fields">
+                <div class="five wide field">
+                    <label>genero</label>
+                    <input type="text"  id="ver_genero" placeholder="Num identificacion" readonly="true">
+                </div>
+                <div class="five wide field">
+                    <label> Fecha nacimiento</label>
+                    <input type="text" id="ver_fechanac" placeholder="Num identificacion" readonly="">
+                </div>
+                <div class=" five wide field">
+                    <label>Tipo sangre</label>
+                    <input type="text" id="ver_tiposangre" placeholder="Nombres" readonly="">
+                </div>
+                <div class="four wide field">
+                    <label>Telefono</label>
+                    <input type="text"  id="ver_telefono" placeholder="Apellidos" readonly="">
+                </div>
+            </div>
+            <div class="fields">
+                <div class="five wide field">
+                    <label>Celular</label>
+                    <input type="text"  id="ver_celular" placeholder="Num identificacion" readonly="true">
+                </div>
+                <div class="five wide field">
+                    <label> Estado civil</label>
+                    <input type="text" id="ver_estadocivil" placeholder="Num identificacion" readonly="">
+                </div>
+                <div class=" five wide field">
+                    <label>Ocupacion</label>
+                    <input type="text" id="ver_ocupacion" placeholder="Nombres" readonly="">
+                </div>
+                <div class="four wide field">
+                    <label>Religion</label>
+                    <input type="text"  id="ver_religion" placeholder="Apellidos" readonly="">
+                </div>
+            </div>
+            <div class="fields">
+                <div class="five wide field">
+                    <label>Pais</label>
+                    <input type="text"  id="ver_pais" placeholder="Num identificacion" readonly="true">
+                </div>
+                <div class="five wide field">
+                    <label>Departamento</label>
+                    <input type="text" id="ver_departamento" placeholder="Num identificacion" readonly="">
+                </div>
+                <div class=" five wide field">
+                    <label>Municipio</label>
+                    <input type="text" id="ver_municipio" placeholder="Nombres" readonly="">
+                </div>
+                <div class="four wide field">
+                    <label>Domicilio</label>
+                    <input type="text"  id="ver_domicilio" placeholder="Apellidos" readonly="">
+                </div>
+            </div>
+            <div class="fields">
+                <div class="five wide field">
+                    <label>Email</label>
+                    <input type="text"  id="ver_email" placeholder="Num identificacion" readonly="true">
+                </div>
+                <div class="five wide field">
+                    <label>Fecha registro</label>
+                    <input type="text" id="ver_fecharegistro" placeholder="Num identificacion" readonly="">
+                </div>
+                <div class=" five wide field">
+                    <label>Estado</label>
+                    <input type="number" id="ver_estado" placeholder="Nombres" readonly="">
+                </div>
+                
+            </div>
+        </form>
+        
+    </div>
+    <div class="actions">
+        
+    </div>
+</div>
 <!-- fin modal ver detalle del paciente-->

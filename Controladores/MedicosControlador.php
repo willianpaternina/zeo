@@ -315,6 +315,19 @@ class MedicosControlador extends Conexion implements IMedicos {
         }
     }
 
+    public function listarAuxiliaresPorId($id_auxiliar) {
+        $sql = "CALL sp_listarAuxiliarPorId (?);";
+        $stmt = $this->cnn->prepare($sql);
+        $stmt->bindParam(1, $id_auxiliar);
+        $stmt->execute();
+
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $this->result[] = $row;
+        }
+
+        return $this->result;
+    }
+
 }
 
 if (isset($_POST["idMedico"]) and isset($_POST["idEspecialidad"])) {
@@ -425,5 +438,10 @@ if(isset($_POST["medicoEspecialidades"]) && $_POST["medicoEspecialidades"]=="reg
     echo json_encode($r);
     return;
 }
-
+if(isset($_POST["medicoEspecialidades"]) && $_POST["medicoEspecialidades"]=="listarAuxiliaresPorId"){
+    $controlador = new MedicosControlador();
+    $r = $controlador->listarAuxiliaresPorId($_POST["idAuxiliar"]);
+    echo json_encode($r);
+    return;
+}
 ?>

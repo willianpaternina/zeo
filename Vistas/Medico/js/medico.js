@@ -58,7 +58,41 @@ $(function(){
     $('#tblAuxiliares tbody').on( 'click', 'button.btnEditarAuxiliar', function () {
         var data = auxiliares.row( $(this).parents('tr') ).data();
             //alert( data[0] );
-            console.log(data);return;
+            console.log(data[5]);return;
+            var datos = new FormData();
+              datos.append("idAuxiliar", $("#tipo_ident").val());
+              datos.append("medicoEspecialidades", "listarAuxiliaresPorId");
+              
+
+
+                $.ajax({
+                    url: 'http://localhost/zeo/Controladores/MedicosControlador.php',
+                    type: 'POST',
+                    data: datos,
+                    cache: false,
+                    processData: false,
+                    contentType: false,
+                    success: function(respuesta){
+                        rept = eval(respuesta)
+                        if(rept[0]["exito"]=='ok'){
+                            //mensaje exito
+                            alert("Los datos se guardaron de manera exitosa")
+                            //actualizar data
+                            auxiliares.ajax.reload(null,false);
+                            //limpiar campos
+                            $(".ui.form.auxiliar")[0].reset();
+                            //cerrar ventana modal
+                            $(".addAuxiliar").hide();
+                            
+                        }else if(rept[0]["response"]=='no_ok'){
+                             //mensaje exito
+                            alert("El tipo y numero de identificacion ya se encuentran registrados, por favor, cambielos")
+                            //actualizar data
+                            auxiliares.ajax.reload(null,false);
+
+                        }
+                    }
+                });
             
             
     } );
@@ -66,8 +100,46 @@ $(function(){
     $('#tblAuxiliares tbody').on( 'click', 'button.btnVerAuxiliar', function () {
         var data = auxiliares.row( $(this).parents('tr') ).data();
             //alert( data[0] );
-            console.log(data);return;
+            $(".verAuxiliar").modal("show")
             
+            var datos = new FormData();
+              datos.append("idAuxiliar", data[5]);
+              datos.append("medicoEspecialidades", "listarAuxiliaresPorId");
+              
+
+
+                $.ajax({
+                    url: 'http://localhost/zeo/Controladores/MedicosControlador.php',
+                    type: 'POST',
+                    data: datos,
+                    cache: false,
+                    processData: false,
+                    contentType: false,
+                    success: function(respuesta){
+                       
+                        rept = eval(respuesta)
+                        
+                        $("#ver_identificacion").val(rept[0].tipoidentificacion +" "+rept[0].identificacion);
+                        $("#ver_nombre").val(rept[0].nombre);
+                        $("#ver_apellido").val(rept[0].apellido);
+                        $("#ver_apellidocasado").val(rept[0].apellidocasada);
+                        $("#ver_genero").val(rept[0].genero);
+                        $("#ver_fechanac").val(rept[0].fechanacimiento);
+                        $("#ver_tiposangre").val(rept[0].tiposangre);
+                        $("#ver_telefono").val(rept[0].telefono);
+                        $("#ver_celular").val(rept[0].celular);
+                        $("#ver_estadocivil").val(rept[0].estadocivil);
+                        $("#ver_ocupacion").val(rept[0].ocupacion);
+                        $("#ver_religion").val(rept[0].religion);
+                        $("#ver_pais").val(rept[0].pais);
+                        $("#ver_departamento").val(rept[0].departamento);
+                        $("#ver_municipio").val(rept[0].municipio);
+                        $("#ver_domicilio").val(rept[0].domicilio);
+                        $("#ver_email").val(rept[0].email);
+                        $("#ver_fecharegistro").val(rept[0].fecharegistro);
+                        $("#ver_estado").val(rept[0].estado);
+                    }
+                });
             
     } );
     /*
