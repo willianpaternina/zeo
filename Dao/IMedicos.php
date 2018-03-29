@@ -20,6 +20,8 @@ interface IMedicos {
      public function medicosEspecialidades($id_medico);
      public function registrarEspecialidad(Especialidades $Especialidad);
      public function actualizarEspecialidad(Especialidades $Especialidad);
+     public function listarAuxiliarMedico($id_medico);
+     public function registrarAuxiliarMedico(Auxiliares $auxiliares);
 }
 
 ?>

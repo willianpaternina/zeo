@@ -20,28 +20,14 @@
                         <table id="tblAuxiliares" class="ui selectable blue celled table botonesAuxiliar " cellspacing="0" width="100%">
                             <thead>
                                 <tr>
-                                     <th>Fecha Nacimiento</th>
-                                     <th>Identificación</th>
+                                     <th>#</th>
+                                     <th>Identificacion</th>
                                      <th>Nombre</th>
                                      <th>Apellido</th>
-                                     <th>Sangre</th>
-                                     <th>Telefono</th>
-                                     <th>Celular</th>
-                                     <th>Operaciones</th>
+                                     <th>Fecha nacimiento</th>
+                                     <th></th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Fecha Nacimiento</td>
-                                    <td>Identificación</td>
-                                    <td>Nombre</td>
-                                    <td>Apellido</td>
-                                    <td>Sangre</td>
-                                    <td>Telefono</td>
-                                    <td>Celular</td>
-                                    <td>Operaciones</td>
-                                </tr>
-                            </tbody>
                         </table>
 
                     </div>
@@ -69,7 +55,7 @@
             <div class="fields">
                 <div class="two wide field">
                     <label>Tipo Identificación</label>
-                    <select name="tident">
+                    <select name="tident" id="tipo_ident">
                       <option value="">SELECCIONE</option>
                       <option value="TI">TI</option>
                       <option value="CC">CC</option>
@@ -78,37 +64,37 @@
                 </div>
                 <div class="three wide field">
                     <label># Identificación</label>
-                    <input type="number" name="identificacion" placeholder="Num identificacion">
+                    <input type="number" name="identificacion" id="identificacion" placeholder="Num identificacion">
                 </div>
                 <div class=" four wide field">
                     <label>Nombre</label>
-                    <input type="text" name="nombre" placeholder="Nombres">
+                    <input type="text" name="nombre" id="nombre" placeholder="Nombres">
                 </div>
                 <div class="four wide field">
                     <label>Apellido</label>
-                    <input type="text" name="apellido" placeholder="Apellidos">
+                    <input type="text" name="apellido" id="apellido" placeholder="Apellidos">
                 </div>
                 <div class="three wide field">
                     <label>Apellido casado</label>
-                    <input type="text" placeholder="Apellido casado">
+                    <input type="text" id="apellidocasado" placeholder="Apellido casado">
                 </div>
             </div>
             <div class="fields">
                 <div class="one wide field">
                     <label>Genero</label>
-                    <select name="genero">
+                    <select name="genero" id="genero">
                       <option value="">SELECCIONE</option>
                       <option value="M">M</option>
                       <option value="F">F</option>
                     </select>
                 </div>
-                <div class="two wide field calendar" id="fechanac">
+                <div class="two wide field calendar">
                     <label>Fecha Nac</label>
-                    <input type="text" name="fechanac" placeholder="Fecha nacimiento">
+                    <input type="text" name="fechanac" id="fechanac" placeholder="Fecha nacimiento">
                 </div>
-                <div class="two wide field">
+                <div class="two wide field" >
                     <label>Tipo Sangre</label>
-                    <select name="tiposangre">
+                    <select name="tiposangre" id="tiposangre">
                       <option value="">SELECCIONE</option>
                       <option value="A+">A+</option>
                       <option value="B+">B+</option>
@@ -116,15 +102,15 @@
                 </div>
                 <div class="two wide field">
                     <label>Telefono</label>
-                    <input type="text" name="telefono" placeholder="Telefono">
+                    <input type="text" name="telefono" id="telefono" placeholder="Telefono">
                 </div>
                 <div class="two wide field">
                     <label>Celular</label>
-                    <input type="text" name="celular" placeholder="# Celular">
+                    <input type="text" name="celular" id="celular" placeholder="# Celular">
                 </div>
                 <div class="four wide field">
                     <label>Estado Civil</label>
-                    <select name="estadocivil">
+                    <select name="estadocivil" id="estadocivil">
                       <option value="">SELECCIONE</option>
                       <option value="SOLTERO">SOLTERO</option>
                       <option value="CASADO">CASADO</option>
@@ -132,37 +118,37 @@
                 </div>
                 <div class="three wide field">
                     <label>Ocupación</label>
-                    <input type="text" placeholder="Ocupación" name="ocupacion">
+                    <input type="text" placeholder="Ocupación" id="ocupacion" name="ocupacion">
                 </div>
             </div>
             <div class="fields">
                 <div class="two wide field">
                     <label>Religión</label>
-                    <input type="text" placeholder="Religión" name="religion">
+                    <input type="text" placeholder="Religión" id="religion" name="religion">
                 </div>
                 <div class="two wide field">
                     <label>Pais</label>
-                    <input type="text" placeholder="País">
+                    <input type="text" placeholder="País" name="pais" id="pais">
                 </div>
                 <div class="two wide field">
                     <label>Departamento</label>
-                    <input type="text" placeholder="Departamento">
+                    <input type="text" placeholder="Departamento" name="departamento" id="departamento">
                 </div>
                 <div class="two wide field">
                     <label>Municipio</label>
-                    <input type="text" placeholder="Municipio">
+                    <input type="text" placeholder="Municipio" name="municipio" id="municipio">
                 </div>
                 <div class="two wide field">
                     <label>Domicilio</label>
-                    <input type="text" placeholder="Domicilio">
+                    <input type="text" placeholder="Domicilio" name="domicilio" id="domicilio">
                 </div>
                 <div class="five wide field">
                     <label>Correo Elec</label>
-                    <input type="text" placeholder="Direccion correo electronico" name="email">
+                    <input type="text" placeholder="Direccion correo electronico" name="email" id="email">
                 </div>
                 <div class="two wide field">
                     <label>Clave</label>
-                    <input type="password" name="clave" placeholder="Clave">
+                    <input type="password" name="clave" placeholder="Clave" id="clave">
                 </div>
                 
             </div>

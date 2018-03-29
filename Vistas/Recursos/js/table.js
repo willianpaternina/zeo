@@ -27,28 +27,7 @@ $(document).ready(function () {
     });
     medico.buttons().container().insertBefore('.botoneraexcelpdfmedico');
     
-    var auxiliares = $('#tblAuxiliares').DataTable({
-        "language": idioma_espanol,
-        "aaSorting": [[0, "desc"]],
-        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "todos"]],
-        buttons: [
-            {
-                extend: 'excelHtml5',
-                text: '<button class="ui green button" type="button"><i class="fa fa-file-excel-o"></i></button>',
-                titleAttr: 'Excel'
-            },
-            {
-                "text": "<i class='fa fa-user-plus'></i>",
-                "titleAttr": "Agregar auxiliar",
-                "className":"ui blue button",
-                "action": function(){
-                  $(".addAuxiliar").modal('show');
-                
-                }
-            },
-        ]
-    });
-    auxiliares.buttons().container().insertBefore('.botoneraexcelpdfauxiliares');
+    
     
      var especialidad = $('#tblEspecialidad').DataTable({
         
