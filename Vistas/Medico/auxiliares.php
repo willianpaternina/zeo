@@ -266,4 +266,126 @@
         
     </div>
 </div>
-<!-- fin modal ver detalle del paciente-->
+<!-- fin modal ver detalle del auxiliar-->
+
+
+<!-- VENTANA MODAL PARA ACTUALIZAR AUXILIARES -->
+<div class="ui fullscreen modal _editAuxiliar">
+    <i class="close icon"></i>
+    <div class="header">
+        <h4>ACTUALIZAR AUXILIAR</h4>
+    </div>
+    <div class="content">
+        <form class="ui form editAuxiliar" id="frmEditAuxiliar">
+            <div class="fields">
+                <div class="two wide field">
+                    <label>Tipo Identificación</label>
+                    <select name="edit_tident" id="edit_tipo_ident">
+                      <option value="">SELECCIONE</option>
+                      <option value="TI">TI</option>
+                      <option value="CC">CC</option>
+                      <option value="RC">RC</option>
+                    </select>
+                </div>
+                <div class="three wide field">
+                    <label># Identificación</label>
+                    <input type="number" name="edit_identificacion" id="edit_identificacion" placeholder="Num identificacion">
+                </div>
+                <div class=" four wide field">
+                    <label>Nombre</label>
+                    <input type="text" name="edit_nombre" id="edit_nombre" placeholder="Nombres">
+                </div>
+                <div class="four wide field">
+                    <label>Apellido</label>
+                    <input type="text" name="edit_apellido" id="edit_apellido" placeholder="Apellidos">
+                </div>
+                <div class="three wide field">
+                    <label>Apellido casado</label>
+                    <input type="text" id="edit_apellidocasado" placeholder="Apellido casado">
+                </div>
+            </div>
+            <div class="fields">
+                <div class="one wide field">
+                    <label>Genero</label>
+                    <select name="edit_genero" id="edit_genero">
+                      <option value="">SELECCIONE</option>
+                      <option value="M">M</option>
+                      <option value="F">F</option>
+                    </select>
+                </div>
+                <div class="two wide field calendar">
+                    <label>Fecha Nac</label>
+                    <input type="text" name="edit_fechanac" id="edit_fechanac" placeholder="Fecha nacimiento">
+                </div>
+                <div class="two wide field" >
+                    <label>Tipo Sangre</label>
+                    <select name="edit_tiposangre" id="edit_tiposangre">
+                      <option value="">SELECCIONE</option>
+                      <option value="A+">A+</option>
+                      <option value="B+">B+</option>
+                    </select>
+                </div>
+                <div class="two wide field">
+                    <label>Telefono</label>
+                    <input type="text" name="edit_telefono" id="edit_telefono" placeholder="Telefono">
+                </div>
+                <div class="two wide field">
+                    <label>Celular</label>
+                    <input type="text" name="edit_celular" id="edit_celular" placeholder="# Celular">
+                </div>
+                <div class="four wide field">
+                    <label>Estado Civil</label>
+                    <select name="edit_estadocivil" id="edit_estadocivil">
+                      <option value="">SELECCIONE</option>
+                      <option value="SOLTERO">SOLTERO</option>
+                      <option value="CASADO">CASADO</option>
+                    </select>
+                </div>
+                <div class="three wide field">
+                    <label>Ocupación</label>
+                    <input type="text" placeholder="Ocupación" id="edit_ocupacion" name="edit_ocupacion">
+                </div>
+            </div>
+            <div class="fields">
+                <div class="two wide field">
+                    <label>Religión</label>
+                    <input type="text" placeholder="Religión" id="edit_religion" name="edit_religion">
+                </div>
+                <div class="two wide field">
+                    <label>Pais</label>
+                    <input type="text" placeholder="País" name="edit_pais" id="edit_pais">
+                </div>
+                <div class="two wide field">
+                    <label>Departamento</label>
+                    <input type="text" placeholder="Departamento" name="edit_departamento" id="edit_departamento">
+                </div>
+                <div class="two wide field">
+                    <label>Municipio</label>
+                    <input type="text" placeholder="Municipio" name="edit_municipio" id="edit_municipio">
+                </div>
+                <div class="two wide field">
+                    <label>Domicilio</label>
+                    <input type="text" placeholder="Domicilio" name="edit_domicilio" id="edit_domicilio">
+                </div>
+                <div class="five wide field">
+                    <label>Correo Elec</label>
+                    <input type="text" placeholder="Direccion correo electronico" name="edit_email" id="edit_email">
+                </div>
+                <div class="two wide field">
+                    <label>Clave</label>
+                    <input type="password" name="edit_clave" placeholder="Clave" id="edit_clave">
+                </div>
+                
+            </div>
+            <button class="ui blue button" type="submit">Actualizar auxiliar</button>
+            <div class="ui error message"></div>
+        </form>
+        
+    </div>
+    <div class="actions">
+        
+    </div>
+</div>
+<!-- FIN MODAL ACTUALIZAR USUARIOS-->
+
+

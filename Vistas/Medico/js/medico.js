@@ -30,7 +30,7 @@ $(function(){
          "columnDefs": [ {
             "targets": -1,
             "data": null,
-            "defaultContent": "<button class='ui mini button btnEditarAuxiliar' >Editar!</button> <button class='ui mini button btnVerAuxiliar'>ver!</button>",
+            "defaultContent": "<button class='ui mini blue button btnEditarAuxiliar' ><i class='edit icon'></i></button> <button class='ui mini blue button btnVerAuxiliar'><i class='eye icon'></i></button>",
         } ],
         "language": idioma_espanol,
         "aaSorting": [[0, "desc"]],
@@ -57,7 +57,9 @@ $(function(){
     
     $('#tblAuxiliares tbody').on( 'click', 'button.btnEditarAuxiliar', function () {
         var data = auxiliares.row( $(this).parents('tr') ).data();
-            //alert( data[0] );
+            //alert( data[0] 
+            $("._editAuxiliar").modal("show");return;
+            
             console.log(data[5]);return;
             var datos = new FormData();
               datos.append("idAuxiliar", $("#tipo_ident").val());
