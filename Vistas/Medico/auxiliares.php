@@ -167,7 +167,7 @@
 <div class="ui fullscreen modal verAuxiliar">
     <i class="close icon"></i>
     <div class="header">
-        <h4>VER AUXILIAR</h4>
+        <h4>DATOS DEL AUXILIAR: <span id="datosDelAuxiliar"></span></h4>
     </div>
     <div class="content">
         <form class="ui form auxiliar" id="frmVerAuxiliar">

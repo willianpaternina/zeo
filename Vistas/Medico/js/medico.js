@@ -80,7 +80,7 @@ $(function(){
                             //actualizar data
                             auxiliares.ajax.reload(null,false);
                             //limpiar campos
-                            $(".ui.form.auxiliar")[0].reset();
+                            $('form').form('reset');
                             //cerrar ventana modal
                             $(".addAuxiliar").hide();
                             
@@ -119,6 +119,7 @@ $(function(){
                        
                         rept = eval(respuesta)
                         
+                        $("#datosDelAuxiliar").html(rept[0].nombre +" "+rept[0].apellido);
                         $("#ver_identificacion").val(rept[0].tipoidentificacion +" "+rept[0].identificacion);
                         $("#ver_nombre").val(rept[0].nombre);
                         $("#ver_apellido").val(rept[0].apellido);
@@ -200,9 +201,9 @@ $(function(){
                             //actualizar data
                             auxiliares.ajax.reload(null,false);
                             //limpiar campos
-                            $(".ui.form.auxiliar")[0].reset();
+                            $('.ui.form.auxiliar').form('reset')
                             //cerrar ventana modal
-                            $(".addAuxiliar").hide();
+                            $(".addAuxiliar").modal('hide');
                             
                         }else if(rept[0]["response"]=='no_ok'){
                              //mensaje exito
