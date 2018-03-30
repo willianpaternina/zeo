@@ -10,5 +10,11 @@
     <?php else: ?>
         <a class="item" href="LayoutPaciente.php?load=cita"><i class="edit icon"></i>Cita medica</a>
     <?php endif ?>
+        
+    <?php if(isset($_GET["load"]) && $_GET["load"]==="citasactivas"): ?>
+        <a class="active item" href="LayoutPaciente.php?load=citasactivas"><i class="edit icon"></i>Citas Activas</a>
+    <?php else: ?>
+        <a class="item" href="LayoutPaciente.php?load=citasactivas"><i class="edit icon"></i>Citas Activas</a>
+    <?php endif ?>
     <a class="item" href="LayoutPaciente.php?load=logout"><i class="power icon"></i>Cerrar sesión</a>
 </div>	

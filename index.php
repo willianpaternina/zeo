@@ -1,19 +1,7 @@
 <?php
 $err = isset($_GET['error']) ? $_GET['error'] : null;
 
-require_once $_SERVER['DOCUMENT_ROOT']."/Zeo/Controladores/AuxiliarControlador.php";
-require_once $_SERVER['DOCUMENT_ROOT']."/Zeo/Modelo/Auxiliares.php";
-$hash = '$2y$07$BCryptRequires22Chrcte/VlQH0piJtjXl.0t1XkA8pw9dMXTpOq';
-$clave = "123456";
-$opciones = [
-    'cost' => 17,
-    'salt' => $hash,
-];
-$pass =  password_hash($clave, PASSWORD_BCRYPT, $opciones);
-$auxiliares = new Auxiliares("4", "", "", 0, "AU123456", "4", "CC", 73097541, "Arnaldo", "Castilla", "", "M", "1991-01-09", "A", 6765877, 3172755590, "SOLTERO", "DESARROLLADOR", "CRISTIANO", "COLOMBIA", "BOLIVAR", "CARTAGENA", "CRA 58A # 6 - 88", "arnaldo.castilla@hotmail.com", $clave, "2018-03-12", 1);
 
-$aux = new AuxiliarControlador(); 
-$r = $aux->RegistrarAuxiliar($auxiliares);
 
 ?>
 <!DOCTYPE html>

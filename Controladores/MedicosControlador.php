@@ -4,6 +4,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . "/Zeo/Configuracion/Conexion.php";
 require_once $_SERVER['DOCUMENT_ROOT'] . "/Zeo/Dao/IMedicos.php";
 require_once $_SERVER['DOCUMENT_ROOT'] . "/Zeo/Modelo/Sesion.php";
 require_once $_SERVER['DOCUMENT_ROOT']."/Zeo/Modelo/Especialidades.php";
+require_once $_SERVER['DOCUMENT_ROOT']."/Zeo/Modelo/Auxiliares.php";
 
 /**
  * Description of MedicosControlador
@@ -257,6 +258,110 @@ class MedicosControlador extends Conexion implements IMedicos {
         }
     }
 
+    public function listarAuxiliarMedico($id_medico) {
+        try {
+            $sql = "call sp_listarAuxiliaresMedicos(?);";
+            //echo $sql;exit;
+            $stmt = $this->cnn->prepare($sql);
+            $stmt->bindParam(1, $id_medico);
+
+            $stmt->execute();
+            
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $this->result[] = $row;
+            }
+            return $this->result;
+            
+        } catch (PDOException $e) {
+            die($e->getMessage());
+        }
+    }
+
+    public function registrarAuxiliarMedico(Auxiliares $auxiliares) {
+        try {
+            $sql = "CALL sp_registrarAuxiliarMedico (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+            $stmt = $this->cnn->prepare($sql);
+            $stmt->bindParam(1, $auxiliares->getCodigo());
+            $stmt->bindParam(2, $auxiliares->getRol());
+            $stmt->bindParam(3, $auxiliares->getTipoidentificacion());
+            $stmt->bindParam(4, $auxiliares->getIdentificacion());
+            $stmt->bindParam(5, $auxiliares->getNombre());
+            $stmt->bindParam(6, $auxiliares->getApellido());
+            $stmt->bindParam(7, $auxiliares->getApellidocasada());
+            $stmt->bindParam(8, $auxiliares->getGenero());
+            $stmt->bindParam(9, $auxiliares->getFechanacimiento());
+            $stmt->bindParam(10, $auxiliares->getTiposangre());
+            $stmt->bindParam(11, $auxiliares->getTelefono());
+            $stmt->bindParam(12, $auxiliares->getCelular());
+            $stmt->bindParam(13, $auxiliares->getEstadocivil());
+            $stmt->bindParam(14, $auxiliares->getOcupacion());
+            $stmt->bindParam(15, $auxiliares->getReligion());
+            $stmt->bindParam(16, $auxiliares->getPais());
+            $stmt->bindParam(17, $auxiliares->getDepartamento());
+            $stmt->bindParam(18, $auxiliares->getMunicipio());
+            $stmt->bindParam(19, $auxiliares->getDomicilio());
+            $stmt->bindParam(20, $auxiliares->getEmail());
+            $stmt->bindParam(21, $auxiliares->getClave());
+            $stmt->bindParam(22, $auxiliares->getEstado());
+            $stmt->bindParam(23, $auxiliares->getFecharegistro());
+            
+            $stmt->execute();
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $this->result[] = $row;
+            }
+            return $this->result;
+        } catch (PDOException $e) {
+            die($e->getMessage());
+        }
+    }
+
+    public function listarAuxiliaresPorId($id_auxiliar) {
+        $sql = "CALL sp_listarAuxiliarPorId (?);";
+        $stmt = $this->cnn->prepare($sql);
+        $stmt->bindParam(1, $id_auxiliar);
+        $stmt->execute();
+
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $this->result[] = $row;
+        }
+
+        return $this->result;
+    }
+
+    public function actualizarAuxiliarMedico(Auxiliares $auxiliares) {
+         try {
+            $sql = "CALL sp_actualizarAuxiliar (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+            $stmt = $this->cnn->prepare($sql);
+            $stmt->bindParam(1, $auxiliares->getIdAuxiliar());
+            $stmt->bindParam(2, $auxiliares->getNombre());
+            $stmt->bindParam(3, $auxiliares->getApellido());
+            $stmt->bindParam(4, $auxiliares->getApellidocasada());
+            $stmt->bindParam(5, $auxiliares->getGenero());
+            $stmt->bindParam(6, $auxiliares->getFechanacimiento());
+            $stmt->bindParam(7, $auxiliares->getTiposangre());
+            $stmt->bindParam(8, $auxiliares->getTelefono());
+            $stmt->bindParam(9, $auxiliares->getCelular());
+            $stmt->bindParam(10, $auxiliares->getEstadocivil());
+            $stmt->bindParam(11, $auxiliares->getOcupacion());
+            $stmt->bindParam(12, $auxiliares->getReligion());
+            $stmt->bindParam(13, $auxiliares->getPais());
+            $stmt->bindParam(14, $auxiliares->getDepartamento());
+            $stmt->bindParam(15, $auxiliares->getMunicipio());
+            $stmt->bindParam(16, $auxiliares->getDomicilio());
+            $stmt->bindParam(17, $auxiliares->getEmail());
+            $stmt->bindParam(18, $auxiliares->getClave());
+            $stmt->bindParam(19, $auxiliares->getEstado());
+            
+            $stmt->execute();
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $this->result[] = $row;
+            }
+            return $this->result;
+        } catch (PDOException $e) {
+            die($e->getMessage());
+        }
+    }
+
 }
 
 if (isset($_POST["idMedico"]) and isset($_POST["idEspecialidad"])) {
@@ -318,6 +423,72 @@ if(isset($_GET["medicoEspecialidades"]) && $_GET["medicoEspecialidades"]=="Actua
     session_start();
     $controlador = new MedicosControlador();
     $r = $controlador->actualizarEspecialidad(new Especialidades($_POST["idEspecialidad"], null, null, $_POST["detalle"]));
+    echo json_encode($r);
+    return;
+}
+if(isset($_GET["medicoEspecialidades"]) && $_GET["medicoEspecialidades"]=="listarAuxiliaresMedico"){
+    session_start(); 
+    $controlador = new MedicosControlador();
+     $r = $controlador->listarAuxiliarMedico($_SESSION["idMedico"]);
+     
+     echo '{
+            "data": [';
+            for($i=0;$i<count($r)-1;$i++){
+            echo ' 
+              [
+                "'.($i+1).'",
+                "'.$r[$i]["tipoidentificacion"]." ".$r[$i]["identificacion"].'",
+                "'.$r[$i]["nombre"].'",
+                "'.$r[$i]["apellido"].'",
+                "'.$r[$i]["fechanacimiento"].'",
+                "'.$r[$i]["idAuxiliar"].'"
+              ],';
+            }
+            echo ' 
+              [
+                "'.(count($r)).'",
+                "'.$r[$i]["tipoidentificacion"]." ".$r[$i]["identificacion"].'",
+                "'.$r[$i]["nombre"].'",
+                "'.$r[$i]["apellido"].'",
+                "'.$r[$i]["fechanacimiento"].'",
+                "'.$r[$i]["idAuxiliar"].'"
+              ]
+            ]
+          }';
+    return;
+}
+if(isset($_POST["medicoEspecialidades"]) && $_POST["medicoEspecialidades"]=="registrarAuxiliarMedico"){
+    //print_r($_POST);return;
+    error_reporting(0);
+    session_start();
+    $controlador = new MedicosControlador();
+    $r = $controlador->registrarAuxiliarMedico(
+            new Auxiliares(
+                    0, $_SESSION["idMedico"], 4, $_POST["tipo_ident"],$_POST["identificacion"],$_POST["nombre"],$_POST["apellido"],$_POST["apellidocasado"],$_POST["genero"],
+                    $_POST["fechanac"],$_POST["tiposangre"],$_POST["telefono"],$_POST["celular"],$_POST["estadocivil"],$_POST["ocupacion"],$_POST["religion"],$_POST["pais"],$_POST["departamento"],
+                    $_POST["municipio"], $_POST["domicilio"], $_POST["email"], $_POST["clave"], $_POST["tipo_ident"].$_POST["identificacion"],1
+                    )
+            );
+    echo json_encode($r);
+    return;
+}
+if(isset($_POST["medicoEspecialidades"]) && $_POST["medicoEspecialidades"]=="listarAuxiliaresPorId"){
+    $controlador = new MedicosControlador();
+    $r = $controlador->listarAuxiliaresPorId($_POST["idAuxiliar"]);
+    echo json_encode($r);
+    return;
+}
+if(isset($_POST["medicoEspecialidades"]) && $_POST["medicoEspecialidades"]=="actualizarAuxiliar"){
+    error_reporting(0);
+    session_start();
+    $controlador = new MedicosControlador();
+    $r = $controlador->actualizarAuxiliarMedico(
+            new Auxiliares(
+                    $_POST["idAuxiliar"], 0, 0, null, 0, $_POST["nombre"], $_POST["apellido"], $_POST["apellidocasado"], $_POST["genero"], $_POST["fechanac"], $_POST["tiposangre"],
+                    $_POST["telefono"], $_POST["celular"], $_POST["estadocivil"], $_POST["ocupacion"], $_POST["religion"], $_POST["pais"], $_POST["departamento"], $_POST["municipio"], $_POST["domicilio"],
+                    $_POST["email"], $_POST["clave"], null, $_POST["estado"]
+                    )
+            );
     echo json_encode($r);
     return;
 }

@@ -35,8 +35,8 @@ class Auxiliares extends Roles {
      private $fecharegistro;
      private $estado;
      
-     public function Auxiliares ($idRol, $rol, $detalle, $idAuxiliar, $codigo, $Rol, $tipoidentificacion, $identificacion, $nombre, $apellido, $apellidocasada, $genero, $fechanacimiento, $tiposangre, $telefono, $celular, $estadocivil, $ocupacion, $religion, $pais, $departamento, $municipio, $domicilio, $email, $clave, $fecharegistro, $estado) {
-        parent::__Roles($idRol, $rol, $detalle);
+     public function Auxiliares ($idAuxiliar, $codigo, $Rol, $tipoidentificacion, $identificacion, $nombre, $apellido, $apellidocasada, $genero, $fechanacimiento, $tiposangre, $telefono, $celular, $estadocivil, $ocupacion, $religion, $pais, $departamento, $municipio, $domicilio, $email, $clave, $fecharegistro, $estado) {
+        //parent::__Roles($idRol, $rol, $detalle);
         $this->idAuxiliar = $idAuxiliar;
         $this->codigo = $codigo;
         $this->Rol = $Rol;

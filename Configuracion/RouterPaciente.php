@@ -18,6 +18,9 @@ class RouterPaciente {
             case 'cita':
                 include_once ('../../Vistas/Paciente/' . $view . '.php');
                 break;
+            case 'citasactivas':
+                include_once ('../../Vistas/Paciente/' . $view . '.php');
+                break;
             
             default:
                 include_once ('../../Vistas/Paciente/error.php');

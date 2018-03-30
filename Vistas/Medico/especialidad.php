@@ -90,7 +90,7 @@
         <form class="ui form upd_especialidad">
             <div class="field">
               <label>Especialidad</label>
-              <input type="text" id="upd_nombreEspecialidad" disabled="" name="upd_nombreEspecialidad" placeholder="Nombre Especialidad">
+              <input type="text" id="upd_nombreEspecialidad" readonly="" name="upd_nombreEspecialidad" placeholder="Nombre Especialidad">
             </div>
             <div class="field">
             <label>Detalle especialidad</label>
