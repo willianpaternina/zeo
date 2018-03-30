@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.7
+-- version 4.7.9
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-03-2018 a las 02:41:16
--- Versión del servidor: 10.1.30-MariaDB
--- Versión de PHP: 7.2.2
+-- Tiempo de generación: 31-03-2018 a las 00:02:15
+-- Versión del servidor: 10.1.31-MariaDB
+-- Versión de PHP: 7.2.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -26,6 +26,15 @@ DELIMITER $$
 --
 -- Procedimientos
 --
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_actualizarAuxiliar` (IN `sp_idAuxiliar` INT, IN `sp_nombre` VARCHAR(25), IN `sp_apellido` VARCHAR(35), IN `sp_apellidocasada` VARCHAR(35), IN `sp_genero` CHAR(1), IN `sp_fechanacimiento` DATE, IN `sp_tiposangre` CHAR(4), IN `sp_telefono` BIGINT(7), IN `sp_celular` BIGINT(10), IN `sp_estadocivil` VARCHAR(35), IN `sp_ocupacion` VARCHAR(80), IN `sp_religion` VARCHAR(50), IN `sp_pais` VARCHAR(35), IN `sp_departamento` VARCHAR(35), IN `sp_municipio` VARCHAR(50), IN `sp_domicilio` VARCHAR(120), IN `sp_email` VARCHAR(200), IN `sp_clave` VARCHAR(60), IN `sp_estado` INT)  BEGIN
+	UPDATE auxiliares SET nombre = sp_nombre, apellido = sp_apellido, apellidocasada = sp_apellidocasada,
+    	genero = sp_genero, fechanacimiento = sp_fechanacimiento, tiposangre = sp_tiposangre, telefono = sp_telefono,
+        celular = sp_celular, estadocivil = sp_estadocivil, ocupacion = sp_ocupacion, religion = sp_religion, pais = sp_pais,
+        departamento = sp_departamento, municipio = sp_municipio, domicilio = sp_domicilio, email = sp_email, clave = sp_clave,
+        	estado = sp_estado WHERE idAuxiliar = sp_idAuxiliar;
+            select 'ok' as exito;
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_actualizarEspecialidad` (IN `sp_idEspecialidades` INT, IN `sp_detalle` VARCHAR(200))  BEGIN
 	UPDATE espacialidades SET detalle = sp_detalle WHERE idEspecialidades = sp_idEspecialidades;
     select 'ok' as exito ;
@@ -222,9 +231,7 @@ CREATE TABLE `auxiliares` (
 --
 
 INSERT INTO `auxiliares` (`idAuxiliar`, `Medico`, `Rol`, `tipoidentificacion`, `identificacion`, `nombre`, `apellido`, `apellidocasada`, `genero`, `fechanacimiento`, `tiposangre`, `telefono`, `celular`, `estadocivil`, `ocupacion`, `religion`, `pais`, `departamento`, `municipio`, `domicilio`, `email`, `clave`, `fecharegistro`, `estado`) VALUES
-(4, 1, 4, 'CC', 1147441, 'arnaldo', 'castilla', '', 'M', '1991-03-15', 'A+', 567444, 312548, 'SOLTERO', 'asmj', 'asdjihb', 'uhuhih', 'ihuh', 'ihihij', 'oooj', 'ojojo', 'ojopj', '2018-03-29 20:16:40', 1),
-(5, 1, 4, 'CC', 454521000, 'JUDITH MARIA', 'FLOREZ ', 'DE CASTILLA', 'M', '1965-06-10', 'A+', 6765412, 3017256136, 'CASADO', 'ENFERMERA', 'CRISTIANO', 'COLOMBIA', 'BOLIVAR', 'CARTAGENA', 'CRA58A #6 - 88', 'JUDITHM@GMAIL.COM', 'QAZ123', '2018-03-29 23:37:03', 1),
-(6, 1, 4, 'CC', 123445477, 'willian', 'paternina', '', 'M', '1994-06-10', 'A+', 56421, 3014541114, 'SOLTERO', 'programador', 'catolico', 'colombia', 'cartagebna', 'bolivar', 'nuevo bosque', 'ing.williapaternina@gmail.com', 'qazwsx123', '2018-03-29 23:52:26', 1);
+(3, 1, 4, 'CC', 12345678, 'DEMO', 'DEMO', 'DEMO', 'M', '1965-09-09', 'A+', 67666888, 30987676766, 'SOLTERO', 'SIN OCUPACION', 'CRISTIANO', 'COLOMBIA', 'BOLIVAR', 'CARTAGENA', 'CRA58A', 'DEMO@DEMO.COM', 'QAZ123', '2018-03-30 22:01:15', 1);
 
 -- --------------------------------------------------------
 
@@ -300,7 +307,8 @@ INSERT INTO `espacialidades` (`idEspecialidades`, `Medico`, `especialidad`, `det
 (13, 1, 'PRUEBa', 'PRUEBA'),
 (14, 1, 'ONCOLOGIA CEREBRAL', 'ESTUDIO COMPLETO de la cabeza'),
 (16, 1, 'ONCOLOGIA NEURAL', 'oncologia neura'),
-(17, 1, 'adas', 'adasd');
+(17, 1, 'adas', 'adasdasdasdasasdasd'),
+(18, 1, 'Pannm', 'kmnabsujhf demo');
 
 -- --------------------------------------------------------
 
@@ -518,7 +526,7 @@ ALTER TABLE `administradores`
 -- AUTO_INCREMENT de la tabla `auxiliares`
 --
 ALTER TABLE `auxiliares`
-  MODIFY `idAuxiliar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `idAuxiliar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `cita`
@@ -536,7 +544,7 @@ ALTER TABLE `consultorio`
 -- AUTO_INCREMENT de la tabla `espacialidades`
 --
 ALTER TABLE `espacialidades`
-  MODIFY `idEspecialidades` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `idEspecialidades` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT de la tabla `horario`

@@ -23,6 +23,7 @@ interface IMedicos {
      public function listarAuxiliarMedico($id_medico);
      public function registrarAuxiliarMedico(Auxiliares $auxiliares);
      public function listarAuxiliaresPorId($id_auxiliar);
+     public function actualizarAuxiliarMedico(Auxiliares $auxiliares);
 }
 
 ?>

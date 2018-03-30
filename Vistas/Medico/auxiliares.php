@@ -273,23 +273,14 @@
 <div class="ui fullscreen modal _editAuxiliar">
     <i class="close icon"></i>
     <div class="header">
-        <h4>ACTUALIZAR AUXILIAR</h4>
+        <h4>ACTUALIZAR AUXILIAR: <span id="edit_NombreAuxiliar"></span></h4> 
     </div>
     <div class="content">
         <form class="ui form editAuxiliar" id="frmEditAuxiliar">
             <div class="fields">
-                <div class="two wide field">
-                    <label>Tipo Identificación</label>
-                    <select name="edit_tident" id="edit_tipo_ident">
-                      <option value="">SELECCIONE</option>
-                      <option value="TI">TI</option>
-                      <option value="CC">CC</option>
-                      <option value="RC">RC</option>
-                    </select>
-                </div>
                 <div class="three wide field">
                     <label># Identificación</label>
-                    <input type="number" name="edit_identificacion" id="edit_identificacion" placeholder="Num identificacion">
+                    <input type="text" name="edit_identificacion" id="edit_identificacion" readonly="">
                 </div>
                 <div class=" four wide field">
                     <label>Nombre</label>
@@ -303,9 +294,7 @@
                     <label>Apellido casado</label>
                     <input type="text" id="edit_apellidocasado" placeholder="Apellido casado">
                 </div>
-            </div>
-            <div class="fields">
-                <div class="one wide field">
+                <div class="three wide field">
                     <label>Genero</label>
                     <select name="edit_genero" id="edit_genero">
                       <option value="">SELECCIONE</option>
@@ -313,6 +302,8 @@
                       <option value="F">F</option>
                     </select>
                 </div>
+            </div>
+            <div class="fields">
                 <div class="two wide field calendar">
                     <label>Fecha Nac</label>
                     <input type="text" name="edit_fechanac" id="edit_fechanac" placeholder="Fecha nacimiento">
@@ -341,7 +332,7 @@
                       <option value="CASADO">CASADO</option>
                     </select>
                 </div>
-                <div class="three wide field">
+                <div class="four wide field">
                     <label>Ocupación</label>
                     <input type="text" placeholder="Ocupación" id="edit_ocupacion" name="edit_ocupacion">
                 </div>
@@ -367,16 +358,25 @@
                     <label>Domicilio</label>
                     <input type="text" placeholder="Domicilio" name="edit_domicilio" id="edit_domicilio">
                 </div>
-                <div class="five wide field">
+                <div class="six wide field">
                     <label>Correo Elec</label>
                     <input type="text" placeholder="Direccion correo electronico" name="edit_email" id="edit_email">
                 </div>
+            </div>
+            <div class="fields">
                 <div class="two wide field">
                     <label>Clave</label>
                     <input type="password" name="edit_clave" placeholder="Clave" id="edit_clave">
                 </div>
-                
+                <div class="two wide field">
+                    <label>Estado</label>
+                    <select name="edit_estado" id="edit_estado">
+                      <option value="1">ACTIVO</option>
+                      <option value="0">NO ACTIVO</option>
+                    </select>
+                </div>
             </div>
+            <input type="hidden" id="edit_IdAuxiliar" />
             <button class="ui blue button" type="submit">Actualizar auxiliar</button>
             <div class="ui error message"></div>
         </form>

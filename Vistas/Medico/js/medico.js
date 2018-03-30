@@ -57,15 +57,11 @@ $(function(){
     
     $('#tblAuxiliares tbody').on( 'click', 'button.btnEditarAuxiliar', function () {
         var data = auxiliares.row( $(this).parents('tr') ).data();
-            //alert( data[0] 
-            $("._editAuxiliar").modal("show");return;
-            
-            console.log(data[5]);return;
+           
+            $("._editAuxiliar").modal("show");
             var datos = new FormData();
-              datos.append("idAuxiliar", $("#tipo_ident").val());
+              datos.append("idAuxiliar", data[5]);
               datos.append("medicoEspecialidades", "listarAuxiliaresPorId");
-              
-
 
                 $.ajax({
                     url: 'http://localhost/zeo/Controladores/MedicosControlador.php',
@@ -75,28 +71,31 @@ $(function(){
                     processData: false,
                     contentType: false,
                     success: function(respuesta){
+                       
                         rept = eval(respuesta)
-                        if(rept[0]["exito"]=='ok'){
-                            //mensaje exito
-                            alert("Los datos se guardaron de manera exitosa")
-                            //actualizar data
-                            auxiliares.ajax.reload(null,false);
-                            //limpiar campos
-                            $('form').form('reset');
-                            //cerrar ventana modal
-                            $(".addAuxiliar").hide();
-                            
-                        }else if(rept[0]["response"]=='no_ok'){
-                             //mensaje exito
-                            alert("El tipo y numero de identificacion ya se encuentran registrados, por favor, cambielos")
-                            //actualizar data
-                            auxiliares.ajax.reload(null,false);
-
-                        }
+                        $("#edit_IdAuxiliar").val(rept[0].idAuxiliar)
+                        $("#edit_NombreAuxiliar").html(rept[0].nombre +" "+rept[0].apellido);
+                        $("#edit_identificacion").val(rept[0].tipoidentificacion +" "+rept[0].identificacion);
+                        $("#edit_nombre").val(rept[0].nombre);
+                        $("#edit_apellido").val(rept[0].apellido);
+                        $("#edit_apellidocasado").val(rept[0].apellidocasada);
+                        $("#edit_genero").val(rept[0].genero);
+                        $("#edit_fechanac").val(rept[0].fechanacimiento);
+                        $("#edit_tiposangre").val(rept[0].tiposangre);
+                        $("#edit_telefono").val(rept[0].telefono);
+                        $("#edit_celular").val(rept[0].celular);
+                        $("#edit_estadocivil").val(rept[0].estadocivil);
+                        $("#edit_ocupacion").val(rept[0].ocupacion);
+                        $("#edit_religion").val(rept[0].religion);
+                        $("#edit_pais").val(rept[0].pais);
+                        $("#edit_departamento").val(rept[0].departamento);
+                        $("#edit_municipio").val(rept[0].municipio);
+                        $("#edit_domicilio").val(rept[0].domicilio);
+                        $("#edit_email").val(rept[0].email);
+                        $("#edit_estado").val(rept[0].estado);
+                        $("#edit_clave").val(rept[0].clave);
                     }
-                });
-            
-            
+                }); 
     } );
     
     $('#tblAuxiliares tbody').on( 'click', 'button.btnVerAuxiliar', function () {
@@ -107,8 +106,6 @@ $(function(){
             var datos = new FormData();
               datos.append("idAuxiliar", data[5]);
               datos.append("medicoEspecialidades", "listarAuxiliaresPorId");
-              
-
 
                 $.ajax({
                     url: 'http://localhost/zeo/Controladores/MedicosControlador.php',
@@ -142,8 +139,7 @@ $(function(){
                         $("#ver_fecharegistro").val(rept[0].fecharegistro);
                         $("#ver_estado").val(rept[0].estado);
                     }
-                });
-            
+                }); 
     } );
     /*
       * VALIDACION FORMULARIO ADDAUXILIAR
@@ -217,8 +213,81 @@ $(function(){
                     }
                 });
       }
-    })    
+    })   
+    /*
+      * VALIDACION FORMULARIO ADDAUXILIAR
+      */     
+    $('.ui.form.editAuxiliar')
+    .form({
+      fields: {
+        edit_nombre     : 'empty',
+        /*tident   : 'empty',
+        identificacion : ['minLength[4]', 'empty'],
+        apellido : ['minLength[3]', 'empty'],
+        genero   : 'empty',
+        fechanac    : 'empty',
+        tiposangre : 'empty',
+        ocupacion : 'empty',
+        email: 'empty',
+        clave: ['minLength[4]', 'empty']*/
+      },
+      onSuccess : function(e){
+          e.preventDefault();
+          //alert("ok")
+          var datos = new FormData();
+              datos.append("idAuxiliar", $("#edit_IdAuxiliar").val());
+              datos.append("nombre", $("#edit_nombre").val());
+              datos.append("apellido", $("#edit_apellido").val());
+              datos.append("apellidocasado", $("#edit_apellidocasado").val());
+              datos.append("genero", $("#edit_genero").val());
+              datos.append("fechanac", $("#edit_fechanac").val());
+              datos.append("tiposangre", $("#edit_tiposangre").val());
+              datos.append("telefono", $("#edit_telefono").val());
+              datos.append("celular", $("#edit_celular").val());
+              datos.append("estadocivil", $("#edit_estadocivil").val());
+              datos.append("ocupacion", $("#edit_ocupacion").val());
+              datos.append("religion", $("#edit_religion").val());
+              datos.append("pais", $("#edit_pais").val());
+              datos.append("departamento", $("#edit_departamento").val());
+              datos.append("municipio", $("#edit_municipio").val());
+              datos.append("domicilio", $("#edit_domicilio").val());
+              datos.append("email", $("#edit_email").val());
+              datos.append("clave", $("#edit_clave").val());
+              datos.append("estado", $("#edit_estado").val());
+              datos.append("medicoEspecialidades", "actualizarAuxiliar");
+
+                $.ajax({
+                    url: 'http://localhost/zeo/Controladores/MedicosControlador.php',
+                    type: 'POST',
+                    data: datos,
+                    cache: false,
+                    processData: false,
+                    contentType: false,
+                    success: function(respuesta){
+                        rept = eval(respuesta)
+                        if(rept[0]["exito"]=='ok'){
+                            //mensaje exito
+                            alert("Los datos se actualizaron de manera exitosa")
+                            //actualizar data
+                            auxiliares.ajax.reload(null,false);
+                            //cerrar ventana modal
+                            $("._editAuxiliar").modal('hide');
+                            
+                        }else{
+                             //mensaje exito
+                            alert("Los datos no pudieron ser actualizados, intente mas tarde.")
+                            //actualizar data
+                            auxiliares.ajax.reload(null,false);
+                             $("._editAuxiliar").modal('hide');
+
+                        }
+                    }
+                });
+      }
+    })   
 })
+
+
 
 
 /*
