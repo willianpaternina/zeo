@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 31-03-2018 a las 00:02:15
+-- Tiempo de generación: 31-03-2018 a las 05:14:09
 -- Versión del servidor: 10.1.31-MariaDB
 -- Versión de PHP: 7.2.3
 
@@ -40,6 +40,10 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_actualizarEspecialidad` (IN `sp_
     select 'ok' as exito ;
  END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_Consultorios` ()  BEGIN
+	select * from  consultorio;
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_GetPacientes` ()  BEGIN 
 	select * from cita as C INNER JOIN pacientes as P ON C.Paciente = P.idPaciente;
  END$$
@@ -47,6 +51,10 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_GetPacientes` ()  BEGIN
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_horarioMedico` (IN `sp_Medico` INT(3), IN `sp_Especialidad` INT(3))  BEGIN
 	SELECT idHorario as id, fecha as start, CONCAT(horainicio," - " , horafinal) as title FROM horario WHERE Medico = sp_Medico AND Especialidad = sp_Especialidad;
    END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_horarioMedicoPorId` (IN `sp_Medico` INT)  BEGIN
+	select * from horario as h INNER JOIN consultorio as c ON h.Consultorio = c.idConsultorio INNER JOIN espacialidades as e ON h.Especialidad = e.idEspecialidades WHERE h.Medico = sp_Medico;
+END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_HorarioPaciente` (IN `sp_Medico` INT)  BEGIN
 	SELECT P.idPaciente as id,  H.fecha AS start, CONCAT(P.nombre," - " , P.apellido , " - " , C.concepto , " - ", C.estado, " - ") as title  from cita as C INNER JOIN pacientes as P ON C.Paciente = P.idPaciente INNER JOIN horario as H ON H.idHorario = C.horario INNER JOIN medicos AS M ON M.idMedico = H.Medico WHERE M.idMedico = sp_Medico;
