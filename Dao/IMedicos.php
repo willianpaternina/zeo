@@ -24,6 +24,9 @@ interface IMedicos {
      public function registrarAuxiliarMedico(Auxiliares $auxiliares);
      public function listarAuxiliaresPorId($id_auxiliar);
      public function actualizarAuxiliarMedico(Auxiliares $auxiliares);
+     public function listarHorarioMedicoPorId($id_medico);
+     public function listarConsultorios();
+     
 }
 
 ?>

@@ -362,6 +362,35 @@ class MedicosControlador extends Conexion implements IMedicos {
         }
     }
 
+    public function listarHorarioMedicoPorId($id_medico) {
+        $sql = "CALL sp_horarioMedicoPorId (?);";
+        $stmt = $this->cnn->prepare($sql);
+        $stmt->bindParam(1, $id_medico);
+        $stmt->execute();
+
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $this->result[] = $row;
+        }
+
+        return $this->result;
+    }
+
+    public function listarConsultorios() {
+        try {
+            $sql = "CALL sp_Consultorios ();";
+            $stmt = $this->cnn->prepare($sql);
+            $stmt->execute();
+
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $this->result[] = $row;
+            }
+
+            return $this->result;
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        }
+    }
+
 }
 
 if (isset($_POST["idMedico"]) and isset($_POST["idEspecialidad"])) {
@@ -489,6 +518,43 @@ if(isset($_POST["medicoEspecialidades"]) && $_POST["medicoEspecialidades"]=="act
                     $_POST["email"], $_POST["clave"], null, $_POST["estado"]
                     )
             );
+    echo json_encode($r);
+    return;
+}
+
+if(isset($_GET["medicoEspecialidades"]) && $_GET["medicoEspecialidades"]=="listarHorarioMedicoPorId"){
+    session_start();
+    $controlador = new MedicosControlador();
+    $r = $controlador->listarHorarioMedicoPorId($_SESSION["idMedico"]);
+     echo '{
+            "data": [';
+            for($i=0;$i<count($r)-1;$i++){
+            echo ' 
+              [
+                "'.($i+1).'",
+                "'.$r[$i]["nombre"].'",
+                "'.$r[$i]["especialidad"].'",
+                "'.$r[$i]["fecha"].'",
+                "'.$r[$i]["horainicio"].'",
+                "'.$r[$i]["horafinal"].'"
+              ],';
+            }
+            echo ' 
+              [
+                "'.(count($r)).'",
+                "'.$r[$i]["nombre"].'",
+                "'.$r[$i]["especialidad"].'",
+                "'.$r[$i]["fecha"].'",
+                "'.$r[$i]["horainicio"].'",
+                "'.$r[$i]["horafinal"].'"
+              ]
+            ]
+          }';
+    return;
+}
+if(isset($_GET["medicoEspecialidades"]) && $_GET["medicoEspecialidades"]=="listarConsultorios"){
+    $controlador = new MedicosControlador();
+    $r = $controlador->listarConsultorios();
     echo json_encode($r);
     return;
 }
