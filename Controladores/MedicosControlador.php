@@ -182,7 +182,6 @@ class MedicosControlador extends Conexion implements IMedicos {
                 $this->result[] = $row;
             }
             return $this->result;
-            return;
         } catch (Exception $exc) {
             echo $exc->getMessage();
         }
@@ -390,6 +389,18 @@ class MedicosControlador extends Conexion implements IMedicos {
             echo $exc->getTraceAsString();
         }
     }
+    public function actualizarEstado($idCita, $estado){
+        $sql = " call sp_actualizarEstadoCita(?, ?); ";
+        $stmt = $this->cnn->prepare($sql);
+        $stmt->bindParam(1, $idCita);
+        $stmt->bindParam(2, $estado);
+
+        $stmt->execute();
+        if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $this->result[] = $row;
+        }
+        return $this->result;
+    }
 
 }
 
@@ -555,6 +566,14 @@ if(isset($_GET["medicoEspecialidades"]) && $_GET["medicoEspecialidades"]=="lista
 if(isset($_GET["medicoEspecialidades"]) && $_GET["medicoEspecialidades"]=="listarConsultorios"){
     $controlador = new MedicosControlador();
     $r = $controlador->listarConsultorios();
+    echo json_encode($r);
+    return;
+}
+
+if(isset($_POST["actualizarEstado"]) && $_POST["actualizarEstado"]=="estado"){
+    
+    $controlador = new MedicosControlador();
+    $r = $controlador->actualizarEstado($_POST["idCita"], $_POST["estado"]);
     echo json_encode($r);
     return;
 }

@@ -24,6 +24,35 @@ $(function(){
               },
              
           },
+        eventClick: function(calEvent, jsEvent, view){
+            //alert(calEvent.id);
+            $("#nombrePaciente").html(calEvent.title)
+            $(".cambiarEstado").modal("show")
+            $("#_btnActualizarEstado").on("click", function(){
+                    
+                    var datos = new FormData();
+                        datos.append("idCita", calEvent.id);
+                        datos.append("estado", $("#estado").val());
+                        datos.append("actualizarEstado", "estado");
+
+                    $.ajax({
+                        url: 'http://localhost/zeo/Controladores/MedicosControlador.php',
+                        type: 'POST',
+                        data: datos,
+                        cache: false,
+                        processData: false,
+                        contentType: false,
+                        success: function(respuesta){
+                            var rept = eval(respuesta)
+                            if(rept[0]["exito"]=='ok'){
+                                alert("Estado actualizado con exito!!!");
+                                $(".cambiarEstado").modal("hide");
+                                $('#calendar').fullCalendar('refetchEvents');
+                            }
+                        }
+                    });
+                })
+        },
   })
   var auxiliares = $('#tblAuxiliares').DataTable({
         "ajax": 'http://localhost/zeo/Controladores/MedicosControlador.php?medicoEspecialidades=listarAuxiliaresMedico',
