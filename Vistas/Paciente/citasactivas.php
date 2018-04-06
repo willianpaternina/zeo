@@ -38,34 +38,3 @@
 </div>
 
 
-<!-- VENTANA MODAL PARA REGISTRAR ESPECIALIDAD -->
-<div class="ui mini modal addEspecialidad">
-    <i class="close icon"></i>
-    <div class="header">
-        <h4>REGISTRAR ESPECIALIDAD</h4>
-    </div>
-    <div class="content">
-        <div class="ui tertiary inverted red segment" style="display: none" id="mensaje_error">
-            <p>La especialidad ya se encuentra registrada</p>
-        </div>
-        <div class="ui tertiary inverted green segment" style="display: none" id="mensajedeexito">
-            <p>La especialidad se guardó con exito</p>
-        </div>
-        <form class="ui form especialidad">
-            <div class="field">
-              <label>Especialidad</label>
-              <input type="text" id="nombreEspecialidad" name="nombreEspecialidad" placeholder="Nombre Especialidad">
-            </div>
-            <div class="field">
-            <label>Detalle especialidad</label>
-            <textarea rows="2" id="detalleEspecialidad" name="detalleEspecialidad" placeholder="Detalle de la especialidad"></textarea>
-            </div>
-            <button class="ui blue button" type="submit">Guardar especialidad</button>
-            <div class="ui error message"></div>
-          </form>
-        
-    </div>
-    <div class="actions">
-        
-    </div>
-</div>

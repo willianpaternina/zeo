@@ -56,6 +56,42 @@ $(function(){
         }
        
     })
+    
+    var citasRealizadas = $('#tblCitasRealizadas').DataTable({
+        "ajax": 'http://localhost/zeo/Controladores/PacientesControlador.php?listarCitasRealizadas=listar',
+         "columnDefs": [ {
+            "targets": -1,
+            "data": null,
+            "defaultContent": "<button class='ui mini blue button btnverActividad' ><i class='eye icon'></i></button> <button class='ui mini green button btnVerMedicamentos' ><i class='eye icon'></i></button> "
+        } ],
+        "language": idioma_espanol,
+        "aaSorting": [[0, "desc"]],
+        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "todos"]],
+        "dom": "Blfrtip",
+        buttons: [
+            {
+                extend: 'excelHtml5',
+                text: '<button class="ui green button" type="button"><i class="fa fa-file-excel-o"></i></button>',
+                titleAttr: 'Excel'
+            },
+        ]
+    });
+    citasRealizadas.buttons().container().insertBefore('.botoneraexcelpdfauxiliares');
+    
+    $('#tblCitasRealizadas tbody').on( 'click', 'button.btnverActividad', function () {
+        var data = citasRealizadas.row( $(this).parents('tr') ).data();
+        $(".verActividades").modal("show")
+        var verActividadPaciente = $('#tblActividadesPacientes').DataTable({
+            "destroy":true,
+            "ajax": 'http://localhost/zeo/Controladores/PacientesControlador.php?listarActividades=listar&idPaciente='+data[6],
+            "language": idioma_espanol,
+            "aaSorting": [[0, "desc"]],
+            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "todos"]],
+            
+        });
+        verActividadPaciente.buttons().container().insertBefore('.botoneraexcelpdfauxiliares');
+       
+    })
 })
 
 var horario = function(id_medico, id_especialidad){
@@ -82,7 +118,6 @@ var horario = function(id_medico, id_especialidad){
              url: 'http://localhost/zeo/Controladores/MedicosControlador.php',
              error: function(response) {
                 console.log(response)
-                 //alert('there was an error while fetching events!');
               },
              
           },
@@ -94,8 +129,6 @@ var horario = function(id_medico, id_especialidad){
                 var id_horario = calEvent.id;
                 var id_paciente = $("#btnhorario").val();
                 var estado = "ESPERA_ATENCION";
-            //console.log('Event: ' + calEvent.id + 'Id_paciente: ' + $("#btnhorario").val() );
-            //return;
                 $("#_btnGuardarCita").on("click", function(){
                     if($("#_motivoCitaMedica").val() == ""){
                         $("#_motivoCitaMedica").focus();

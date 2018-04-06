@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 06-04-2018 a las 08:11:49
+-- Tiempo de generación: 06-04-2018 a las 18:44:51
 -- Versión del servidor: 10.1.30-MariaDB
 -- Versión de PHP: 7.2.2
 
@@ -86,6 +86,10 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_iniciarsesionpaciente` (IN `sp_e
    FROM pacientes p 
    INNER JOIN Roles r ON p.Rol = r.idRol 
    WHERE p.email = sp_email AND p.clave = sp_clave AND p.Rol = sp_rol;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_listarActividadesPacientes` (IN `sp_Paciente` INT)  BEGIN
+select * from actividades as a INNER JOIN etapatumor as et ON a.Etapatumor=et.idEtapatumor WHERE a.Paciente = sp_Paciente;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_ListarAuxiliares` ()  BEGIN
@@ -2089,7 +2093,7 @@ ALTER TABLE `tumorprimario`
 -- AUTO_INCREMENT de la tabla `actividades`
 --
 ALTER TABLE `actividades`
-  MODIFY `idActividad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `idActividad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `administradores`
@@ -2107,7 +2111,7 @@ ALTER TABLE `auxiliares`
 -- AUTO_INCREMENT de la tabla `cita`
 --
 ALTER TABLE `cita`
-  MODIFY `idCita` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idCita` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `clasificaciontumor`
@@ -2131,7 +2135,7 @@ ALTER TABLE `departamentos`
 -- AUTO_INCREMENT de la tabla `espacialidades`
 --
 ALTER TABLE `espacialidades`
-  MODIFY `idEspecialidades` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `idEspecialidades` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `etapatumor`
