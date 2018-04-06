@@ -89,6 +89,22 @@ class PacientesControlador extends Conexion implements IPacientes {
         }
     }
 
+    public function listarActividades($Paciente) {
+        try {
+            $sql = "CALL sp_listarActividadesPacientes (?);";
+            $stmt = $this->cnn->prepare($sql);
+            $stmt->bindParam(1, $Paciente);
+
+            $stmt->execute();
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $this->result[] = $row;
+            }
+            return $this->result;
+        } catch (PDOException $e) {
+            die($e->getMessage());
+        }
+    }
+
 }
 
 if(isset($_GET["listarCitas"]) && $_GET["listarCitas"]=="listar"){
@@ -144,10 +160,116 @@ if(isset($_GET["listarCitas"]) && $_GET["listarCitas"]=="listar"){
      }
     return;
 }
-if($_POST["actualizarEstadoCita"] && $_POST["actualizarEstadoCita"]=="update"){
+if(isset($_POST["actualizarEstadoCita"]) && $_POST["actualizarEstadoCita"]=="update"){
     //print_r($_POST);return;
     $paciente = new PacientesControlador();
     $r = $paciente->actualizarEstadoCita($_POST["idCita"], $_POST["estado"]);
     echo json_encode($r);return;
+}
+
+if(isset($_GET["listarCitasRealizadas"]) && $_GET["listarCitasRealizadas"]=="listar"){
+    session_start();
+    error_reporting(0);
+    $paciente = new PacientesControlador();
+    $r = $paciente->listarCitas($_SESSION["idPaciente"], 'ATENDIDO');
+    if(count($r) != 0){
+         echo '{
+            "data": [';
+            for($i=0;$i<count($r)-1;$i++){
+            echo ' 
+              [
+                "'.($i+1).'",
+                "'.$r[$i]["concepto"].'",
+                "'.$r[$i]["estado"].'",
+                "'.$r[$i]["especialidad"].'",
+                "'.$r[$i]["fecha"].'",
+                "'.$r[$i]["horainicio"]." - ".$r[$i]["horafinal"].'",
+                "'.$r[$i]["Paciente"].'"
+              ],';
+            }
+            echo ' 
+              [
+                "'.(count($r)).'",
+                "'.$r[$i]["concepto"].'",
+                "'.$r[$i]["estado"].'",
+                "'.$r[$i]["especialidad"].'",
+                "'.$r[$i]["fecha"].'",
+                "'.$r[$i]["horainicio"]." - ".$r[$i]["horafinal"].'",
+                "'.$r[$i]["Paciente"].'"
+              ]
+            ]
+          }';
+     }else{
+         echo '{
+            "data": [';
+            
+            echo ' 
+              [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ] 
+              ]
+              }';
+            
+            
+     }
+    return;
+}
+
+if(isset($_GET["listarActividades"]) && $_GET["listarActividades"]=="listar"){
+    session_start();
+   // error_reporting(0);
+    $paciente = new PacientesControlador();
+    $r = $paciente->listarActividades($_SESSION["idPaciente"]);
+    //print_r($r);return;
+    if(count($r) != 0){
+         echo '{
+            "data": [';
+            for($i=0;$i<count($r)-1;$i++){
+            echo ' 
+              [
+                "'.$r[$i]["nombreetapa"].'",
+                "'.$r[$i]["concepto"].'",
+                "'.$r[$i]["estado"].'",
+                "'.$r[$i]["fecharegistro"].'",
+                "'.$r[$i]["numerohora"].'",
+                "'.$r[$i]["numerodia"].'"
+              ],';
+            }
+            echo ' 
+              [
+                "'.$r[$i]["nombreetapa"].'",
+                "'.$r[$i]["concepto"].'",
+                "'.$r[$i]["estado"].'",
+                "'.$r[$i]["fecharegistro"].'",
+                "'.$r[$i]["numerohora"].'",
+                "'.$r[$i]["numerodia"].'"
+              ]
+            ]
+          }';
+     }else{
+         echo '{
+            "data": [';
+            
+            echo ' 
+              [
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ] 
+              ]
+              }';
+            
+            
+     }
+    return;
 }
 ?>

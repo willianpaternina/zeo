@@ -11,5 +11,7 @@ interface IPacientes {
     
      public function IniciarSesionPaciente();
      public function listarCitas($idPaciente, $estado);
+     public function actualizarEstadoCita($idCita, $estado);
+     public function listarActividades($Paciente);
 }
 ?>

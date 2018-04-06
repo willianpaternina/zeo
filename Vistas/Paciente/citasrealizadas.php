@@ -38,30 +38,24 @@
 
 
 <!-- VENTANA MODAL PARA REGISTRAR ESPECIALIDAD -->
-<div class="ui mini modal addEspecialidad">
+<div class="ui fullscreen modal verActividades">
     <i class="close icon"></i>
     <div class="header">
-        <h4>REGISTRAR ESPECIALIDAD</h4>
+        <h4>VER ACTIVIDADES</h4>
     </div>
     <div class="content">
-        <div class="ui tertiary inverted red segment" style="display: none" id="mensaje_error">
-            <p>La especialidad ya se encuentra registrada</p>
-        </div>
-        <div class="ui tertiary inverted green segment" style="display: none" id="mensajedeexito">
-            <p>La especialidad se guardó con exito</p>
-        </div>
-        <form class="ui form especialidad">
-            <div class="field">
-              <label>Especialidad</label>
-              <input type="text" id="nombreEspecialidad" name="nombreEspecialidad" placeholder="Nombre Especialidad">
-            </div>
-            <div class="field">
-            <label>Detalle especialidad</label>
-            <textarea rows="2" id="detalleEspecialidad" name="detalleEspecialidad" placeholder="Detalle de la especialidad"></textarea>
-            </div>
-            <button class="ui blue button" type="submit">Guardar especialidad</button>
-            <div class="ui error message"></div>
-          </form>
+        <table id="tblActividadesPacientes" class="ui selectable blue celled table " cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>Etapa tumo</th>
+                    <th>Concepto</th>
+                    <th>Estado</th>
+                    <th>Fecha Registro</th>
+                    <th>Numero Hora</th>
+                    <th>Hora Dia</th>
+                </tr>
+            </thead>
+        </table>
         
     </div>
     <div class="actions">
