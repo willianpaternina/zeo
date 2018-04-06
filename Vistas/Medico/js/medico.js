@@ -1,4 +1,5 @@
 $(function(){     
+    
     /*
      * CALENDARIO VISTA INICIO MEDICO
      */
@@ -339,6 +340,7 @@ $(function(){
                 "className":"ui blue button",
                 "action": function(){
                     selectConsultorios();
+                    selectEspecialidades();
                   $(".addHorario").modal('show');
                 
                 }
@@ -346,6 +348,58 @@ $(function(){
         ]
     });
     Horario.buttons().container().insertBefore('.botoneraexcelpdfauxiliares');
+    
+     /*
+      * VALIDACION FORMULARIO ADDHORARIO
+      */     
+    $('.ui.form._addHorario')
+    .form({
+      fields: {
+        ipd_fecha   : 'empty',
+        upd_horaInicio   : 'empty',
+        upd_horaFin   : 'empty',
+      },
+      onSuccess : function(e){
+          e.preventDefault();
+          //alert("ok");return;
+          var datos = new FormData();
+              datos.append("select_consultorio", $("#select_consultorio").val());
+              datos.append("select_especialidad", $("#select_especialidad").val());
+              datos.append("upd_fecha", $("#upd_fecha").val());
+              datos.append("upd_horaInicio", $("#upd_horaInicio").val());
+              datos.append("upd_horaFin", $("#upd_horaFin").val());
+              datos.append("registrarHorarioMedico", "registrarHorario");
+
+                $.ajax({
+                    url: 'http://localhost/zeo/Controladores/MedicosControlador.php',
+                    type: 'POST',
+                    data: datos,
+                    cache: false,
+                    processData: false,
+                    contentType: false,
+                    success: function(respuesta){
+                        //console.log(respuesta);return
+                        rept = eval(respuesta)
+                        if(rept[0]["exito"]=='ok'){
+                            //mensaje exito
+                            alert("Los datos se gaurdaron de manera exitosa")
+                            //actualizar data
+                            Horario.ajax.reload(null,false);
+                            //cerrar ventana modal
+                            $(".addHorario").modal('hide');
+                            
+                        }else{
+                             //mensaje exito
+                            alert("Los datos no pudieron ser guardados")
+                            //actualizar data
+                            Horario.ajax.reload(null,false);
+                             $(".addHorario").modal('hide');
+
+                        }
+                    }
+                });
+      }
+    })
 })
 
 
@@ -401,14 +455,31 @@ var selectConsultorios = function(){
     dataType: "json",
     success: function(data){
         $('#select_consultorio').html('');
-        //console.log(data);return;
-      $("#select_consultorio").append('<option value=0>SELECCIONE</option>');  
+        //console.log(data);return;  
       $.each(data,function(key, registro) {
         $("#select_consultorio").append('<option value='+registro.idConsultorio+'>'+registro.nombre+'</option>');
       });        
     },
     error: function(data) {
-      alert('error');
+      alert('Ocurrio un error al cargar consultorios');
+    }
+  });
+}
+
+var selectEspecialidades = function(){
+    $.ajax({
+    type: "GET",
+    url: 'http://localhost/zeo/Controladores/MedicosControlador.php?listarEspacilidadesMedico=listarEspecialalidades', 
+    dataType: "json",
+    success: function(data){
+      $('#select_especialidad').html('');
+         
+      $.each(data,function(key, registro) {
+        $("#select_especialidad").append('<option value='+registro.idEspecialidades+'>'+registro.especialidad+'</option>');
+      });        
+    },
+    error: function(data) {
+      alert('Ocurrio un error al cargar especialidades');
     }
   });
 }

@@ -36,6 +36,7 @@
         <link href="../Recursos/css/layout.css" rel="stylesheet" type="text/css"/>
         <link href="../Recursos/css/fullcalendar.min.css" rel="stylesheet" type="text/css"/>
         <link href="../Recursos/css/fullcalendar.print.min.css" rel='stylesheet' media='print' />
+        
     </head>
     <body>
         <div class="ui-layout-north">

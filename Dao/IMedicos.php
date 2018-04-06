@@ -32,6 +32,9 @@ interface IMedicos {
      public function consultarActividadesEtapa($idPaciente);
      public function medicoRegistrarMedicamento($datos);
      public function listarMedicamentoPaciente($idPaciente);
+     public function listarEspecialidadMedico($idMedico);
+     public function registrarHorario($datos);
+     
      
 }
 

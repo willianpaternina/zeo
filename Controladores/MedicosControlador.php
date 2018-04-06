@@ -473,6 +473,45 @@ class MedicosControlador extends Conexion implements IMedicos {
         return $this->result;
     }
 
+    public function listarEspecialidadMedico($idMedico) {
+         try {
+            $sql = "CALL sp_listarEspecialidad (?);";
+            $stmt = $this->cnn->prepare($sql);
+            $stmt->bindParam(1, $idMedico);
+            $stmt->execute();
+
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $this->result[] = $row;
+            }
+
+            return $this->result;
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        }
+    }
+
+    public function registrarHorario($datos) {
+        try {
+            $sql = "CALL sp_registrarHorario (?, ?, ?, ?, ?, ?);";
+            $stmt = $this->cnn->prepare($sql);
+            $stmt->bindParam(1, $datos["idMedico"]);
+            $stmt->bindParam(2, $datos["select_consultorio"]);
+            $stmt->bindParam(3, $datos["select_especialidad"]);
+            $stmt->bindParam(4, $datos["upd_fecha"]);
+            $stmt->bindParam(5, $datos["upd_horaInicio"]);
+            $stmt->bindParam(6, $datos["upd_horaFin"]);
+            $stmt->execute();
+
+            if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $this->result[] = $row;
+            }
+
+            return $this->result;
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        }
+    }
+
 }
 
 if (isset($_POST["idMedico"]) and isset($_POST["idEspecialidad"])) {
@@ -608,7 +647,8 @@ if(isset($_GET["medicoEspecialidades"]) && $_GET["medicoEspecialidades"]=="lista
     session_start();
     $controlador = new MedicosControlador();
     $r = $controlador->listarHorarioMedicoPorId($_SESSION["idMedico"]);
-     echo '{
+     if(count($r) != 0){
+         echo '{
             "data": [';
             for($i=0;$i<count($r)-1;$i++){
             echo ' 
@@ -632,7 +672,24 @@ if(isset($_GET["medicoEspecialidades"]) && $_GET["medicoEspecialidades"]=="lista
               ]
             ]
           }';
-    return;
+          return;
+     }else{
+         echo '{
+            "data": [';
+            
+            echo ' 
+              [
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ] 
+              ]
+              }';
+     }
+    
 }
 if(isset($_GET["medicoEspecialidades"]) && $_GET["medicoEspecialidades"]=="listarConsultorios"){
     $controlador = new MedicosControlador();
@@ -819,6 +876,29 @@ if(isset($_GET["listarMedicamentoPaciente"]) && $_GET["listarMedicamentoPaciente
             
             
      }
+    return;
+}
+if(isset($_GET["listarEspacilidadesMedico"]) && $_GET["listarEspacilidadesMedico"]=="listarEspecialalidades" ){
+    session_start();
+    $controlador = new MedicosControlador();
+    $r = $controlador->listarEspecialidadMedico($_SESSION["idMedico"]);
+    echo json_encode($r);
+    return;
+}
+
+if(isset($_POST["registrarHorarioMedico"]) && $_POST["registrarHorarioMedico"]=="registrarHorario"){
+    session_start();
+    $datos = array(
+        "idMedico" => $_SESSION["idMedico"],
+        "select_consultorio" => $_POST["select_consultorio"],
+        "select_especialidad" => $_POST["select_especialidad"],
+        "upd_fecha" => $_POST["upd_fecha"],
+        "upd_horaInicio" => $_POST["upd_horaInicio"],
+        "upd_horaFin" => $_POST["upd_horaFin"],
+    );
+    $controlador = new MedicosControlador();
+    $r = $controlador->registrarHorario($datos);
+    echo json_encode($r);
     return;
 }
 ?>

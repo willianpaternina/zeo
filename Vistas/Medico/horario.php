@@ -48,26 +48,26 @@
         <h4>REGISTRAR HORARIO</h4>
     </div>
     <div class="content">
-        <form class="ui form especialidad">
+        <form class="ui form _addHorario">
             <div class="field">
               <label>Consultorio</label>
-              <select id="select_consultorio"></select>
+              <select id="select_consultorio" name="select_consultorio"></select>
             </div>
             <div class="field">
               <label>Especialidad</label>
-              <select id="select_especialidad"></select>
+              <select id="select_especialidad" name="select_especialidad"></select>
             </div>
             <div class="field">
               <label>Fecha</label>
-              <input type="text" id="upd_nombreEspecialidad" name="fecha" placeholder="Fecha atencion">
+              <input type="text" id="upd_fecha" name="ipd_fecha" placeholder="Fecha atencion">
             </div>
             <div class="field">
               <label>Hora inicio</label>
-              <input type="text" id="upd_nombreEspecialidad" name="upd_nombreEspecialidad" placeholder="Hora inicio fin">
+              <input type="text" id="upd_horaInicio" name="upd_horaInicio" placeholder="Hora inicio fin">
             </div>
             <div class="field">
               <label>Hora fin</label>
-              <input type="text" id="upd_nombreEspecialidad" name="upd_nombreEspecialidad" placeholder="Hora final atencion">
+              <input type="text" id="upd_horaFin" name="upd_horaFin" placeholder="Hora final atencion">
             </div>
             <button class="ui blue button" type="submit">Guardar horario</button>
             <div class="ui error message"></div>
@@ -112,4 +112,5 @@
         
     </div>
 </div>
+
 <!-- fin modal ver detalle del paciente-->
