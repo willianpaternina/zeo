@@ -409,7 +409,7 @@ class MedicosControlador extends Conexion implements IMedicos {
         $stmt->bindParam(2, $estado);
 
         $stmt->execute();
-        if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $this->result[] = $row;
         }
         return $this->result;

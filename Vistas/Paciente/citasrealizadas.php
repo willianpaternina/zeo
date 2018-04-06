@@ -1,4 +1,3 @@
-
 <div class="ui segments">
     <div class="ui blue inverted segment">
         <h4>MÓDULO DE CITAS ACTIVAS</h4>
@@ -10,7 +9,7 @@
             </div>
             <div class="ui secondary segment">
                     <div class="ui raised segment botoneraexcelpdfespecialidad ">
-                        <table id="tblCitasActivas" class="ui selectable blue celled table " cellspacing="0" width="100%">
+                        <table id="tblCitasRealizadas" class="ui selectable blue celled table " cellspacing="0" width="100%">
                             <thead>
                                 <tr>
                                     <th>#</th>
