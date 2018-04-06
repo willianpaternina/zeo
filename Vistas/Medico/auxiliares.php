@@ -29,14 +29,6 @@
                                 </tr>
                             </thead>
                         </table>
-
-                    </div>
-                
-                    <div class="ui raised segment botoneraexcelpdfpaciente horario" style="display: none">
-
-                        <button class="ui blue button" id="back"><i class="fa fa-arrow-left"></i> Regresar</button>
-                        <h1>Horario del medico: </h1>
-                        <div id='calendar'></div>
                     </div>
             </div>
         </div>
@@ -132,11 +124,11 @@
                 </div>
                 <div class="two wide field">
                     <label>Departamento</label>
-                    <input type="text" placeholder="Departamento" name="departamento" id="departamento">
+                    <input type="number" placeholder="Departamento" name="departamento" id="departamento">
                 </div>
                 <div class="two wide field">
                     <label>Municipio</label>
-                    <input type="text" placeholder="Municipio" name="municipio" id="municipio">
+                    <input type="number" placeholder="Municipio" name="municipio" id="municipio">
                 </div>
                 <div class="two wide field">
                     <label>Domicilio</label>
@@ -233,11 +225,11 @@
                 </div>
                 <div class="five wide field">
                     <label>Departamento</label>
-                    <input type="text" id="ver_departamento" placeholder="Num identificacion" readonly="">
+                    <input type="number" id="ver_departamento" placeholder="Num identificacion" readonly="">
                 </div>
                 <div class=" five wide field">
                     <label>Municipio</label>
-                    <input type="text" id="ver_municipio" placeholder="Nombres" readonly="">
+                    <input type="number" id="ver_municipio" placeholder="Nombres" readonly="">
                 </div>
                 <div class="four wide field">
                     <label>Domicilio</label>
@@ -348,11 +340,11 @@
                 </div>
                 <div class="two wide field">
                     <label>Departamento</label>
-                    <input type="text" placeholder="Departamento" name="edit_departamento" id="edit_departamento">
+                    <input type="number" placeholder="Departamento" name="edit_departamento" id="edit_departamento">
                 </div>
                 <div class="two wide field">
                     <label>Municipio</label>
-                    <input type="text" placeholder="Municipio" name="edit_municipio" id="edit_municipio">
+                    <input type="number" placeholder="Municipio" name="edit_municipio" id="edit_municipio">
                 </div>
                 <div class="two wide field">
                     <label>Domicilio</label>

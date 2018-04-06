@@ -19,8 +19,7 @@
                     <table class="ui celled table" cellspacing="0" width="100%">
                         <thead>
                             <tr>
-                                <th>CODIGO</th>
-                                <th>PACIENTE</th>
+                                <th>NOMBRE</th>
                                 <th>EMAIL</th>
                                 <th>ESPECIALIDAD</th>
                                 <th>CITAS</th>
@@ -28,7 +27,6 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td><?php echo $listaMedicos[$i]["codigo"] ?></td>
                                 <td><?php echo $listaMedicos[$i]["nombre"]." ".$listaMedicos[$i]["apellido"] ?></td>
                                 <td><?php echo $listaMedicos[$i]["email"] ?></td>
                                 <td><?php echo $listaMedicos[$i]["especialidad"] ?></td>
@@ -54,7 +52,6 @@
 
 
 <!-- VENTANA MODAL PARA TOMAR LA CITA -->
-<!-- modal ver detalle del paciente-->
 <div class="ui fullscreen modal confirmar_cita">
     
     <i class="close icon"></i>
@@ -84,4 +81,4 @@
         <button class="ui green button" id="_btnGuardarCita"><i class="fa fa-edit"></i> Guardar cita</button>
     </div>
 </div>
-<!-- fin modal ver detalle del paciente-->
+<!-- FIN VENTANA MODAL PARA TOMAR LA CITA-->

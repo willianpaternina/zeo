@@ -1,5 +1,6 @@
 <div class="ui blue vertical menu">
     <a class="active item" href="LayoutMedico.php?load=inicio"><i class="home icon"></i>Inicio</a>
+    <a class="item" href="LayoutMedico.php?load=gestionpaciente"><i class="configure icon"></i>Gestion Paciente</a>
     <a class="item" href="LayoutMedico.php?load=pacientes"><i class="user icon"></i>Pacientes</a>
     <a class="item" href="LayoutMedico.php?load=auxiliares"><i class="user icon"></i>Auxiliares</a>
     <a class="item" href="LayoutMedico.php?load=especialidad"><i class="star icon"></i>Especialidad</a>

@@ -72,6 +72,7 @@
         <script src="../Recursos/js/jszip.min.js" type="text/javascript"></script>
         <script src="../Recursos/js/vfs_fonts.js" type="text/javascript"></script>
         <script src="js/medico.js" type="text/javascript"></script>
+        <script src="js/gestionPaciente.js" type="text/javascript"></script>
         <script src='../Recursos/js/moment.min.js' type="text/javascript"></script>
         <script src='../Recursos/js/fullcalendar.min.js' type="text/javascript"></script>
         

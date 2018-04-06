@@ -30,6 +30,9 @@ class RouterMedico {
             case 'verpaciente':
                 include_once ('../../Vistas/Medico/' . $view . '.php');
                 break;
+            case 'gestionpaciente':
+                include_once ('../../Vistas/Medico/' . $view . '.php');
+                break;
             case 'logout':
                 include_once ('../../Vistas/Medico/' . $view . '.php');
                 break;

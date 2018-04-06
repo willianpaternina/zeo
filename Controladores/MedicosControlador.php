@@ -182,7 +182,6 @@ class MedicosControlador extends Conexion implements IMedicos {
                 $this->result[] = $row;
             }
             return $this->result;
-            return;
         } catch (Exception $exc) {
             echo $exc->getMessage();
         }
@@ -362,6 +361,106 @@ class MedicosControlador extends Conexion implements IMedicos {
         }
     }
 
+    public function listarHorarioMedicoPorId($id_medico) {
+        $sql = "CALL sp_horarioMedicoPorId (?);";
+        $stmt = $this->cnn->prepare($sql);
+        $stmt->bindParam(1, $id_medico);
+        $stmt->execute();
+
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $this->result[] = $row;
+        }
+
+        return $this->result;
+    }
+
+    public function listarConsultorios() {
+        try {
+            $sql = "CALL sp_Consultorios ();";
+            $stmt = $this->cnn->prepare($sql);
+            $stmt->execute();
+
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $this->result[] = $row;
+            }
+
+            return $this->result;
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        }
+    }
+    public function actualizarEstado($idCita, $estado){
+        $sql = " call sp_actualizarEstadoCita(?, ?); ";
+        $stmt = $this->cnn->prepare($sql);
+        $stmt->bindParam(1, $idCita);
+        $stmt->bindParam(2, $estado);
+
+        $stmt->execute();
+        if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $this->result[] = $row;
+        }
+        return $this->result;
+    }
+    
+    public function listarCitaEstado($id_medico, $estado){
+        $sql = " call sp_listarCitaEstado(?, ?); ";
+        $stmt = $this->cnn->prepare($sql);
+        $stmt->bindParam(1, $id_medico);
+        $stmt->bindParam(2, $estado);
+
+        $stmt->execute();
+        if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $this->result[] = $row;
+        }
+        return $this->result;
+    }
+
+    public function medicoRegistrarActividad($datos) {
+        $sql = " call sp_registrarActividad(?, ?, ?, ?, ?, ?); ";
+        $stmt = $this->cnn->prepare($sql);
+        $stmt->bindParam(1, $datos["idPaciente"]);
+        $stmt->bindParam(2, $datos["etapaTumor"]);
+        $stmt->bindParam(3, $datos["concepto"]);
+        $stmt->bindParam(4, $datos["estado"]);
+        $stmt->bindParam(5, $datos["numHoras"]);
+        $stmt->bindParam(6, $datos["numDias"]);
+
+        $stmt->execute();
+        if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $this->result[] = $row;
+        }
+        return $this->result;
+    }
+
+    public function consultarActividadesEtapa($idPaciente) {
+        $sql = " call sp_consultarActividadesEtapatumo(?); ";
+        $stmt = $this->cnn->prepare($sql);
+        $stmt->bindParam(1, $idPaciente);
+
+        $stmt->execute();
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $this->result[] = $row;
+        }
+        return $this->result;
+    }
+
+    public function medicoRegistrarMedicamento($datos) {
+        $sql = " call sp_registrarMedicamento(?, ?, ?, ?, ?, ?); ";
+        $stmt = $this->cnn->prepare($sql);
+        $stmt->bindParam(1, $datos["idPacienteMed"]);
+        $stmt->bindParam(2, $datos["medicamentos"]);
+        $stmt->bindParam(3, $datos["etapa"]);
+        $stmt->bindParam(4, $datos["concepto"]);
+        $stmt->bindParam(5, $datos["medNumHoras"]);
+        $stmt->bindParam(6, $datos["medNumDias"]);
+
+        $stmt->execute();
+        if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $this->result[] = $row;
+        }
+        return $this->result;
+    }
+
 }
 
 if (isset($_POST["idMedico"]) and isset($_POST["idEspecialidad"])) {
@@ -491,5 +590,174 @@ if(isset($_POST["medicoEspecialidades"]) && $_POST["medicoEspecialidades"]=="act
             );
     echo json_encode($r);
     return;
+}
+
+if(isset($_GET["medicoEspecialidades"]) && $_GET["medicoEspecialidades"]=="listarHorarioMedicoPorId"){
+    session_start();
+    $controlador = new MedicosControlador();
+    $r = $controlador->listarHorarioMedicoPorId($_SESSION["idMedico"]);
+     echo '{
+            "data": [';
+            for($i=0;$i<count($r)-1;$i++){
+            echo ' 
+              [
+                "'.($i+1).'",
+                "'.$r[$i]["nombre"].'",
+                "'.$r[$i]["especialidad"].'",
+                "'.$r[$i]["fecha"].'",
+                "'.$r[$i]["horainicio"].'",
+                "'.$r[$i]["horafinal"].'"
+              ],';
+            }
+            echo ' 
+              [
+                "'.(count($r)).'",
+                "'.$r[$i]["nombre"].'",
+                "'.$r[$i]["especialidad"].'",
+                "'.$r[$i]["fecha"].'",
+                "'.$r[$i]["horainicio"].'",
+                "'.$r[$i]["horafinal"].'"
+              ]
+            ]
+          }';
+    return;
+}
+if(isset($_GET["medicoEspecialidades"]) && $_GET["medicoEspecialidades"]=="listarConsultorios"){
+    $controlador = new MedicosControlador();
+    $r = $controlador->listarConsultorios();
+    echo json_encode($r);
+    return;
+}
+
+if(isset($_POST["actualizarEstado"]) && $_POST["actualizarEstado"]=="estado"){
+    
+    $controlador = new MedicosControlador();
+    $r = $controlador->actualizarEstado($_POST["idCita"], $_POST["estado"]);
+    echo json_encode($r);
+    return;
+}
+
+if(isset($_GET["listarCitaEstado"]) && $_GET["listarCitaEstado"]=="listarEstadoMedico"){
+    session_start();
+    $controlador = new MedicosControlador();
+    $r = $controlador->listarCitaEstado($_SESSION["idMedico"], 'ATENDIDO');
+     if(count($r) != 0){
+         echo '{
+            "data": [';
+            for($i=0;$i<count($r)-1;$i++){
+            echo ' 
+              [
+                "'.($i+1).'",
+                "'.$r[$i]["nombre"].'",
+                "'.$r[$i]["fecha"].'",
+                "'.$r[$i]["estado"].'",
+                "'.$r[$i]["idPaciente"].'"
+              ],';
+            }
+            echo ' 
+              [
+                "'.(count($r)).'",
+                "'.$r[$i]["nombre"].'",
+                "'.$r[$i]["fecha"].'",
+                "'.$r[$i]["estado"].'",
+                "'.$r[$i]["idPaciente"].'"
+              ]
+            ]
+          }';
+     }else{
+         echo '{
+            "data": [';
+            
+            echo ' 
+              [
+                "",
+                "",
+                "",
+                "",
+                ""
+              ] 
+              ]
+              }';
+            
+            
+     }
+    return;
+}
+if(isset($_POST["medigoRegistrarActividad"]) && $_POST["medigoRegistrarActividad"]=="registarActividad"){
+    //print_r($_POST);return;
+    $datos = array(
+        "idPaciente" => $_POST["idPaciente"],
+        "etapaTumor" => $_POST["etapaTumor"],
+        "concepto" => $_POST["concepto"],
+        "estado" => $_POST["estado"],
+        "numHoras" => $_POST["numHoras"],
+        "numDias" => $_POST["numDias"],
+    );
+    $regitrarActividad = new MedicosControlador();
+    $r = $regitrarActividad->medicoRegistrarActividad($datos);
+    echo json_encode($r);return;
+}
+if(isset($_GET["consultarActividadesEtapa"]) && $_GET["consultarActividadesEtapa"]=="listarActividades"){
+    $controller = new MedicosControlador();
+    $r = $controller->consultarActividadesEtapa($_GET["idPaciente"]);
+    if(count($r) != 0){
+         echo '{
+            "data": [';
+            for($i=0;$i<count($r)-1;$i++){
+            echo ' 
+              [
+                "'.$r[$i]["nombreetapa"].'",
+                "'.$r[$i]["concepto"].'",
+                "'.$r[$i]["estado"].'",
+                "'.$r[$i]["fecharegistro"].'",
+                "'.$r[$i]["numerohora"].'",
+                "'.$r[$i]["numerodia"].'"
+              ],';
+            }
+            echo ' 
+              [
+                "'.$r[$i]["nombreetapa"].'",
+                "'.$r[$i]["concepto"].'",
+                "'.$r[$i]["estado"].'",
+                "'.$r[$i]["fecharegistro"].'",
+                "'.$r[$i]["numerohora"].'",
+                "'.$r[$i]["numerodia"].'"
+              ]
+            ]
+          }';
+     }else{
+         echo '{
+            "data": [';
+            
+            echo ' 
+              [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ] 
+              ]
+              }';
+            
+            
+     }
+    return;
+}
+if(isset($_POST["registrarMedicamento"]) && $_POST["registrarMedicamento"]=="medicoRegistrarMedicamento"){
+    //print_r($_POST);return;
+    $datos = array(
+        "idPacienteMed" => $_POST["idPacienteMed"],
+        "medicamentos" => $_POST["medicamentos"],
+        "etapa" => $_POST["etapa"],
+        "concepto" => $_POST["concepto"],
+        "medNumHoras" => $_POST["medNumHoras"],
+        "medNumDias" => $_POST["medNumDias"]
+    );
+    $controller = new MedicosControlador();
+    $r = $controller->medicoRegistrarMedicamento($datos);
+    echo json_encode($r);
 }
 ?>

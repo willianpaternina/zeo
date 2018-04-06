@@ -24,6 +24,35 @@ $(function(){
               },
              
           },
+        eventClick: function(calEvent, jsEvent, view){
+            //alert(calEvent.id);
+            $("#nombrePaciente").html(calEvent.title)
+            $(".cambiarEstado").modal("show")
+            $("#_btnActualizarEstado").on("click", function(){
+                    
+                    var datos = new FormData();
+                        datos.append("idCita", calEvent.id);
+                        datos.append("estado", $("#estado").val());
+                        datos.append("actualizarEstado", "estado");
+
+                    $.ajax({
+                        url: 'http://localhost/zeo/Controladores/MedicosControlador.php',
+                        type: 'POST',
+                        data: datos,
+                        cache: false,
+                        processData: false,
+                        contentType: false,
+                        success: function(respuesta){
+                            var rept = eval(respuesta)
+                            if(rept[0]["exito"]=='ok'){
+                                alert("Estado actualizado con exito!!!");
+                                $(".cambiarEstado").modal("hide");
+                                $('#calendar').fullCalendar('refetchEvents');
+                            }
+                        }
+                    });
+                })
+        },
   })
   var auxiliares = $('#tblAuxiliares').DataTable({
         "ajax": 'http://localhost/zeo/Controladores/MedicosControlador.php?medicoEspecialidades=listarAuxiliaresMedico',
@@ -284,7 +313,39 @@ $(function(){
                     }
                 });
       }
-    })   
+    })
+    
+    
+    var Horario = $('#tblHorario').DataTable({
+        "ajax": 'http://localhost/zeo/Controladores/MedicosControlador.php?medicoEspecialidades=listarHorarioMedicoPorId',
+         "columnDefs": [ {
+            "targets": -1,
+            "data": null,
+            "defaultContent": "<button class='ui mini blue button btnEditarAuxiliar' ><i class='edit icon'></i></button>",
+        } ],
+        "language": idioma_espanol,
+        "aaSorting": [[0, "desc"]],
+        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "todos"]],
+        "dom": "Blfrtip",
+        buttons: [
+            {
+                extend: 'excelHtml5',
+                text: '<button class="ui green button" type="button"><i class="fa fa-file-excel-o"></i></button>',
+                titleAttr: 'Excel'
+            },
+            {
+                "text": "<i class='fa fa-user-plus'></i>",
+                "titleAttr": "Agregar horario",
+                "className":"ui blue button",
+                "action": function(){
+                    selectConsultorios();
+                  $(".addHorario").modal('show');
+                
+                }
+            },
+        ]
+    });
+    Horario.buttons().container().insertBefore('.botoneraexcelpdfauxiliares');
 })
 
 
@@ -333,5 +394,22 @@ var idioma_espanol = {
     }
 }
 
-
+var selectConsultorios = function(){
+    $.ajax({
+    type: "GET",
+    url: 'http://localhost/zeo/Controladores/MedicosControlador.php?medicoEspecialidades=listarConsultorios', 
+    dataType: "json",
+    success: function(data){
+        $('#select_consultorio').html('');
+        //console.log(data);return;
+      $("#select_consultorio").append('<option value=0>SELECCIONE</option>');  
+      $.each(data,function(key, registro) {
+        $("#select_consultorio").append('<option value='+registro.idConsultorio+'>'+registro.nombre+'</option>');
+      });        
+    },
+    error: function(data) {
+      alert('error');
+    }
+  });
+}
 
