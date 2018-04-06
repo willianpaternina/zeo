@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 06-04-2018 a las 06:47:58
+-- Tiempo de generación: 06-04-2018 a las 08:11:49
 -- Versión del servidor: 10.1.30-MariaDB
 -- Versión de PHP: 7.2.2
 
@@ -102,6 +102,10 @@ END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_listarCitaEstado` (IN `sp_Medico` INT, IN `sp_estado` VARCHAR(35))  BEGIN
 	select P.idPaciente, CONCAT(p.nombre, " ", p.apellido) as nombre, h.fecha, c.estado from cita as c INNER JOIN horario as h ON c.Horario = h.idHorario INNER JOIN pacientes as p ON c.Paciente = p.idPaciente INNER JOIN medicos as m ON h.Medico = m.idMedico where m.idMedico = sp_Medico and c.estado = sp_estado;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_listarCitas` (IN `sp_Paciente` INT, IN `sp_estado` VARCHAR(35))  BEGIN
+select * from cita as c INNER JOIN horario as h ON c.Horario = h.idHorario INNER JOIN espacialidades as e ON h.Especialidad = e.idEspecialidades WHERE c.Paciente = sp_Paciente and c.estado = sp_estado;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_listarEspecialidad` (IN `sp_Medico` INT)  BEGIN
@@ -235,8 +239,7 @@ CREATE TABLE `actividades` (
 --
 
 INSERT INTO `actividades` (`idActividad`, `Paciente`, `Etapatumor`, `concepto`, `estado`, `fecharegistro`, `numerohora`, `numerodia`) VALUES
-(9, 3, 4, 'DEMO', 'DEMO', '2018-04-05', 2, 3),
-(10, 3, 4, 'PRUEBA', 'PRUEBA', '2018-04-05', 3, 3);
+(9, 3, 4, 'DEMO', 'DEMO', '2018-04-05', 2, 3);
 
 -- --------------------------------------------------------
 
@@ -330,7 +333,10 @@ CREATE TABLE `cita` (
 --
 
 INSERT INTO `cita` (`idCita`, `Paciente`, `Horario`, `concepto`, `estado`, `fecharegistro`) VALUES
-(1, 3, 3, 'dolor general', 'ATENDIDO', '2018-04-03');
+(1, 3, 3, 'dolor general', 'ATENDIDO', '2018-04-03'),
+(2, 3, 4, 'PRUEBA', 'CANCELADO_USUARIO', '2018-04-06'),
+(3, 3, 4, 'PROBANDO', 'CANCELADO_USUARIO', '2018-04-06'),
+(4, 3, 4, 'DOLOR ESPALDA', 'CANCELADO_USUARIO', '2018-04-06');
 
 -- --------------------------------------------------------
 
@@ -2101,7 +2107,7 @@ ALTER TABLE `auxiliares`
 -- AUTO_INCREMENT de la tabla `cita`
 --
 ALTER TABLE `cita`
-  MODIFY `idCita` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idCita` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `clasificaciontumor`
