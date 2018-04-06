@@ -34,11 +34,11 @@ $(function(){
         $("._verMedicamentos").modal("show")
         var consultarMedicamentos = $('#tblVerMedicamentosPaciente').DataTable({
             "destroy":true,
-            //"ajax": 'http://localhost/zeo/Controladores/MedicosControlador.php?consultarActividadesEtapa=listarActividades&idPaciente='+data[4],
+            "ajax": 'http://localhost/zeo/Controladores/MedicosControlador.php?listarMedicamentoPaciente=listar&idPaciente='+data[4],
              "columnDefs": [ {
                 "targets": -1,
                 "data": null,
-                "defaultContent": "<button class='ui mini blue button btnAddActividad' ><i class='edit icon'></i></button> ",
+                "defaultContent": "<button class='ui mini blue button btnEditMedicamento' ><i class='edit icon'></i></button> <button class='ui mini red button btnDeleteMedicamento' ><i class='delete icon'></i></button> ",
             } ],
             "language": idioma_espanol,
             "aaSorting": [[0, "desc"]],
@@ -63,7 +63,7 @@ $(function(){
              "columnDefs": [ {
                 "targets": -1,
                 "data": null,
-                "defaultContent": "<button class='ui mini blue button btnAddActividad' ><i class='edit icon'></i></button> ",
+                "defaultContent": "<button class='ui mini blue button btnEditActividad' ><i class='edit icon'></i></button> <button class='ui mini red button btnDeleteActividad' ><i class='delete icon'></i></button> ",
             } ],
             "language": idioma_espanol,
             "aaSorting": [[0, "desc"]],
@@ -137,7 +137,7 @@ $(function(){
       fields: {
         medicamentos     : 'empty',
         etapa     : 'empty',
-        concepto     : 'empty',
+        conceptoMed     : 'empty',
         medNumHoras     : 'empty',
         medNumDias     : 'empty',
       },

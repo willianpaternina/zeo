@@ -461,6 +461,18 @@ class MedicosControlador extends Conexion implements IMedicos {
         return $this->result;
     }
 
+    public function listarMedicamentoPaciente($idPaciente) {
+        $sql = " call sp_listarMedicamentosPaciente(?); ";
+        $stmt = $this->cnn->prepare($sql);
+        $stmt->bindParam(1, $idPaciente);
+
+        $stmt->execute();
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $this->result[] = $row;
+        }
+        return $this->result;
+    }
+
 }
 
 if (isset($_POST["idMedico"]) and isset($_POST["idEspecialidad"])) {
@@ -759,5 +771,54 @@ if(isset($_POST["registrarMedicamento"]) && $_POST["registrarMedicamento"]=="med
     $controller = new MedicosControlador();
     $r = $controller->medicoRegistrarMedicamento($datos);
     echo json_encode($r);
+}
+
+if(isset($_GET["listarMedicamentoPaciente"]) && $_GET["listarMedicamentoPaciente"]=="listar"){
+    $controller = new MedicosControlador();
+    $r = $controller->listarMedicamentoPaciente($_GET["idPaciente"]);
+    if(count($r) != 0){
+         echo '{
+            "data": [';
+            for($i=0;$i<count($r)-1;$i++){
+            echo ' 
+              [
+                "'.$r[$i]["nombre"].'",
+                "'.$r[$i]["nombreetapa"].'",
+                "'.$r[$i]["concepto"].'",
+                "'.$r[$i]["fecharegistro"].'",
+                "'.$r[$i]["numerohora"].'",
+                "'.$r[$i]["numerodia"].'"
+              ],';
+            }
+            echo ' 
+              [
+                "'.$r[$i]["nombre"].'",
+                "'.$r[$i]["nombreetapa"].'",
+                "'.$r[$i]["concepto"].'",
+                "'.$r[$i]["fecharegistro"].'",
+                "'.$r[$i]["numerohora"].'",
+                "'.$r[$i]["numerodia"].'"
+              ]
+            ]
+          }';
+     }else{
+         echo '{
+            "data": [';
+            
+            echo ' 
+              [
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ] 
+              ]
+              }';
+            
+            
+     }
+    return;
 }
 ?>
