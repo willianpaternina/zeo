@@ -1,8 +1,4 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 $(function(){   
     
     $("#back").on("click", function(){
@@ -11,7 +7,55 @@ $(function(){
         $('#calendar').fullCalendar('destroy');
         $("#motivoCitaMedida").val("")
     })
-    
+    var citasActivas = $('#tblCitasActivas').DataTable({
+        "ajax": 'http://localhost/zeo/Controladores/PacientesControlador.php?listarCitas=listar',
+         "columnDefs": [ {
+            "targets": -1,
+            "data": null,
+            "defaultContent": "<button class='ui mini red button btnCancelarCita' ><i class='delete icon'></i></button> "
+        } ],
+        "language": idioma_espanol,
+        "aaSorting": [[0, "desc"]],
+        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "todos"]],
+        "dom": "Blfrtip",
+        buttons: [
+            {
+                extend: 'excelHtml5',
+                text: '<button class="ui green button" type="button"><i class="fa fa-file-excel-o"></i></button>',
+                titleAttr: 'Excel'
+            },
+        ]
+    });
+    citasActivas.buttons().container().insertBefore('.botoneraexcelpdfauxiliares');
+    $('#tblCitasActivas tbody').on( 'click', 'button.btnCancelarCita', function () {
+        var data = citasActivas.row( $(this).parents('tr') ).data();
+        if(confirm("¿Desea cancelar la cita?")){
+            //return;
+            var datos = new FormData();
+                datos.append("idCita", data[6]);
+                datos.append("estado", "CANCELADO_USUARIO");
+                datos.append("actualizarEstadoCita", "update");
+
+            $.ajax({
+                "destroy":true,
+                url: 'http://localhost/zeo/Controladores/PacientesControlador.php',
+                type: 'POST',
+                data: datos,
+                cache: false,
+                processData: false,
+                contentType: false,
+                success: function(respuesta){
+                    var rept = eval(respuesta)
+                    if(rept[0]["exito"]=='ok'){
+                        alert("cita cancelada exitosamente");
+                        citasActivas.ajax.reload(null,false);
+                        return;
+                    }
+                }
+            });
+        }
+       
+    })
 })
 
 var horario = function(id_medico, id_especialidad){

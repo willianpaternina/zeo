@@ -10,5 +10,6 @@
 interface IPacientes {
     
      public function IniciarSesionPaciente();
+     public function listarCitas($idPaciente, $estado);
 }
 ?>

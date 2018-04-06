@@ -156,9 +156,9 @@
         <table id="tblVerMedicamentosPaciente" class="ui selectable blue celled table botonesAuxiliar " cellspacing="0" width="100%">
             <thead>
                 <tr>
+                     <th>Nombre medicamento</th>
                      <th>Etapa Tumor</th>
                      <th>Concepto</th>
-                     <th>Estado</th>
                      <th>Fecha registro</th>
                      <th>Numero hora</th>
                      <th>Numero dia</th>

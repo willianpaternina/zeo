@@ -1,5 +1,7 @@
 <?php
-
+require_once $_SERVER['DOCUMENT_ROOT'] . "/Zeo/Configuracion/Conexion.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . "/Zeo/Dao/IPacientes.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . "/Zeo/Modelo/Sesion.php";
 /**
  * Esta clase contiene los metodos para interacturar con las diferentes vistas
  *
@@ -53,7 +55,99 @@ class PacientesControlador extends Conexion implements IPacientes {
         }
     }
 
+    public function listarCitas($idPaciente, $estado) {
+        try {
+            $sql = "CALL sp_listarCitas (?, ?);";
+            $stmt = $this->cnn->prepare($sql);
+            $stmt->bindParam(1, $idPaciente);
+            $stmt->bindParam(2, $estado);
+
+            $stmt->execute();
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $this->result[] = $row;
+            }
+            return $this->result;
+        } catch (PDOException $e) {
+            die($e->getMessage());
+        }
+    }
+
+    public function actualizarEstadoCita($idCita, $estado) {
+        try {
+            $sql = "CALL sp_actualizarEstadoCita (?, ?);";
+            $stmt = $this->cnn->prepare($sql);
+            $stmt->bindParam(1, $idCita);
+            $stmt->bindParam(2, $estado);
+
+            $stmt->execute();
+            if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $this->result[] = $row;
+            }
+            return $this->result;
+        } catch (PDOException $e) {
+            die($e->getMessage());
+        }
+    }
 
 }
 
+if(isset($_GET["listarCitas"]) && $_GET["listarCitas"]=="listar"){
+    session_start();
+    error_reporting(0);
+    $paciente = new PacientesControlador();
+    $r = $paciente->listarCitas($_SESSION["idPaciente"], 'ESPERA_ATENCION');
+    if(count($r) != 0){
+         echo '{
+            "data": [';
+            for($i=0;$i<count($r)-1;$i++){
+            echo ' 
+              [
+                "'.($i+1).'",
+                "'.$r[$i]["concepto"].'",
+                "'.$r[$i]["estado"].'",
+                "'.$r[$i]["especialidad"].'",
+                "'.$r[$i]["fecha"].'",
+                "'.$r[$i]["horainicio"]." - ".$r[$i]["horafinal"].'",
+                "'.$r[$i]["idCita"].'"
+              ],';
+            }
+            echo ' 
+              [
+                "'.(count($r)).'",
+                "'.$r[$i]["concepto"].'",
+                "'.$r[$i]["estado"].'",
+                "'.$r[$i]["especialidad"].'",
+                "'.$r[$i]["fecha"].'",
+                "'.$r[$i]["horainicio"]." - ".$r[$i]["horafinal"].'",
+                "'.$r[$i]["idCita"].'"
+              ]
+            ]
+          }';
+     }else{
+         echo '{
+            "data": [';
+            
+            echo ' 
+              [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ] 
+              ]
+              }';
+            
+            
+     }
+    return;
+}
+if($_POST["actualizarEstadoCita"] && $_POST["actualizarEstadoCita"]=="update"){
+    //print_r($_POST);return;
+    $paciente = new PacientesControlador();
+    $r = $paciente->actualizarEstadoCita($_POST["idCita"], $_POST["estado"]);
+    echo json_encode($r);return;
+}
 ?>
